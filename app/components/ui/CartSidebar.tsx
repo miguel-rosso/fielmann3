@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Image from 'next/image';
-import { useCart } from '../context/CartContext';
+import { useCart } from '@/context/CartContext';
 
 const CloseIcon = () => (
   <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">

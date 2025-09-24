@@ -1,9 +1,9 @@
-import Header from './components/Header';
-import Footer from './components/Footer';
-import CartSidebar from './components/CartSidebar';
-import HeroSection from './components/HeroSection';
-import CategoriesSection from './components/CategoriesSection';
-import FeaturedProducts from './components/FeaturedProducts';
+import Header from '@/components/layout/Header';
+import Footer from '@/components/layout/Footer';
+import CartSidebar from '@/components/ui/CartSidebar';
+import HeroSection from '@/components/shared/HeroSection';
+import CategoriesSection from '@/components/shared/CategoriesSection';
+import FeaturedProducts from '@/components/product/FeaturedProducts';
 
 export default function Home() {
   return (

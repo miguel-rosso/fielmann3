@@ -1,4 +1,4 @@
-import { ApiResponse, ApiProduct, GlassesApiParams } from '../types/api';
+import { ApiResponse, ApiProduct, GlassesApiParams } from '@/api/types/api';
 
 const API_BASE_URL = 'https://fim-test.storefront.api.scayle.cloud/v1';
 const IMAGE_BASE_URL = 'https://fim-test.storefront.api.scayle.cloud'; // We'll need to construct the full image URL
@@ -23,7 +23,7 @@ function constructImageUrl(hash: string): string {
 }
 
 // Import the CartContext Product type
-import { Product as CartProduct } from '../context/CartContext';
+import { Product as CartProduct } from '@/context/CartContext';
 
 // Transform API product to CartContext Product type for compatibility
 function transformProduct(apiProduct: ApiProduct): CartProduct {

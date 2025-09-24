@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
-import { fetchContacts, fetchContactsBrands } from '../services/contactsApi';
-import { Product } from '../context/CartContext';
-import { GlassesApiParams } from '../types/api';
+import { fetchContacts, fetchContactsBrands } from '@/api/services/contactsApi';
+import { Product } from '@/context/CartContext';
+import { GlassesApiParams } from '@/api/types/api';
 
 interface UseContactsReturn {
   contacts: Product[];

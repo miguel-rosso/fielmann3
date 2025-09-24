@@ -3,7 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { useStaggeredAnimation } from '../hooks/useStaggeredAnimation';
+import { useStaggeredAnimation } from '@/api/hooks/useStaggeredAnimation';
 
 const ArrowRightIcon = () => (
   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

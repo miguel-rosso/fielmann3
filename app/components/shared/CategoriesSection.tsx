@@ -3,7 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { useStaggeredAnimation } from '../hooks/useStaggeredAnimation';
+import { useStaggeredAnimation } from '@/api/hooks/useStaggeredAnimation';
 
 interface CategoryCardProps {
   title: string;

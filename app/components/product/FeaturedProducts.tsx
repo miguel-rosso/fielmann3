@@ -3,8 +3,8 @@
 import React from 'react';
 import Link from 'next/link';
 import ProductCard from './ProductCard';
-import { getFeaturedProducts } from '../data/products';
-import { useStaggeredAnimation } from '../hooks/useStaggeredAnimation';
+import { getFeaturedProducts } from '@/lib/products';
+import { useStaggeredAnimation } from '@/api/hooks/useStaggeredAnimation';
 
 const ArrowRightIcon = () => (
   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

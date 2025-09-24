@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
-import { fetchAccessories, fetchAccessoriesBrands } from '../services/accessoriesApi';
-import { Product } from '../context/CartContext';
-import { GlassesApiParams } from '../types/api';
+import { fetchAccessories, fetchAccessoriesBrands } from '@/api/services/accessoriesApi';
+import { Product } from '@/context/CartContext';
+import { GlassesApiParams } from '@/api/types/api';
 
 interface UseAccessoriesReturn {
   accessories: Product[];

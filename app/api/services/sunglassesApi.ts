@@ -1,4 +1,4 @@
-import { ApiResponse, ApiProduct, GlassesApiParams } from '../types/api';
+import { ApiResponse, ApiProduct, GlassesApiParams } from '@/api/types/api';
 
 const API_BASE_URL = 'https://fim-test.storefront.api.scayle.cloud/v1';
 
@@ -22,7 +22,7 @@ function constructImageUrl(hash: string): string {
 }
 
 // Import the CartContext Product type
-import { Product as CartProduct } from '../context/CartContext';
+import { Product as CartProduct } from '@/context/CartContext';
 
 // Transform API product to CartContext Product type for compatibility
 function transformProduct(apiProduct: ApiProduct): CartProduct {
@@ -37,12 +37,12 @@ function transformProduct(apiProduct: ApiProduct): CartProduct {
     const brand = getAttributeValue(attributes, 'brand') || 'Unknown Brand';
     const modelName = getAttributeValue(attributes, 'modelName');
     const description = getAttributeValue(attributes, 'description') || 
-                       (modelName ? `${brand} ${modelName}` : `${brand} Accessories`);
+                       (modelName ? `${brand} ${modelName}` : `${brand} Sunglasses`);
     
     // Use the first image - API products should have images
     const image = apiProduct.images?.length > 0 
       ? constructImageUrl(apiProduct.images[0].hash)
-      : '/placeholder-accessories.jpg';
+      : '/placeholder-sunglasses.jpg';
     
     const price = variant?.price?.withTax ? variant.price.withTax / 100 : 0;
     const inStock = variant?.stock?.quantity > 0;
@@ -54,8 +54,8 @@ function transformProduct(apiProduct: ApiProduct): CartProduct {
       description,
       price,
       image,
-      category: 'accessories' as const,
-      categoryId: 9, // Accessories/Merchandise category ID
+      category: 'sunglasses' as const,
+      categoryId: 7, // Sunglasses category ID
       inStock,
     };
   } catch (error) {
@@ -64,8 +64,8 @@ function transformProduct(apiProduct: ApiProduct): CartProduct {
   }
 }
 
-// Fetch accessories products from the API
-export async function fetchAccessories(params: GlassesApiParams = {}): Promise<CartProduct[]> {
+// Fetch sunglasses products from the API
+export async function fetchSunglasses(params: GlassesApiParams = {}): Promise<CartProduct[]> {
   try {
     const queryParams = new URLSearchParams();
     
@@ -76,12 +76,12 @@ export async function fetchAccessories(params: GlassesApiParams = {}): Promise<C
     // Always include attributes and variants for detailed product info
     queryParams.append('with', 'attributes,variants');
     
-    // Filter for accessories products using category filter
-    // Category 9 corresponds to accessories/merchandise products
-    queryParams.append('filters[category]', '9');
+    // Filter for sunglasses products using category filter
+    // Category 7 corresponds to sunglasses products
+    queryParams.append('filters[category]', '7');
     
     const url = `${API_BASE_URL}/products?${queryParams.toString()}`;
-    console.log('Fetching accessories from:', url);
+    console.log('Fetching sunglasses from:', url);
     
     const response = await fetch(url);
     
@@ -98,8 +98,8 @@ export async function fetchAccessories(params: GlassesApiParams = {}): Promise<C
       throw new Error('Invalid API response structure');
     }
     
-    // All products returned should already be accessories due to the API filter
-    console.log(`Found ${data.entities.length} accessories products from API`);
+    // All products returned should already be sunglasses due to the API filter
+    console.log(`Found ${data.entities.length} sunglasses products from API`);
     
     // Transform to our UI format with error handling
     const transformedProducts = data.entities.map((product, index) => {
@@ -114,9 +114,9 @@ export async function fetchAccessories(params: GlassesApiParams = {}): Promise<C
           brand: 'Unknown Brand',
           description: 'Product details unavailable',
           price: 0,
-          image: '/placeholder-accessories.jpg',
-          category: 'accessories' as const,
-          categoryId: 9,
+          image: '/placeholder-sunglasses.jpg',
+          category: 'sunglasses' as const,
+          categoryId: 7,
           inStock: false,
         };
       }
@@ -125,23 +125,23 @@ export async function fetchAccessories(params: GlassesApiParams = {}): Promise<C
     return transformedProducts;
     
   } catch (error) {
-    console.error('Error fetching accessories:', error);
+    console.error('Error fetching sunglasses:', error);
     throw new Error(
       error instanceof Error 
-        ? `Failed to fetch accessories: ${error.message}`
-        : 'Failed to fetch accessories: Unknown error'
+        ? `Failed to fetch sunglasses: ${error.message}`
+        : 'Failed to fetch sunglasses: Unknown error'
     );
   }
 }
 
-// Get all available accessories brands
-export async function fetchAccessoriesBrands(): Promise<string[]> {
+// Get all available sunglasses brands
+export async function fetchSunglassesBrands(): Promise<string[]> {
   try {
-    const products = await fetchAccessories({ limit: 100 });
+    const products = await fetchSunglasses({ limit: 100 });
     const brands = [...new Set(products.map(p => p.brand).filter(Boolean))];
     return brands.sort();
   } catch (error) {
-    console.error('Error fetching accessories brands:', error);
+    console.error('Error fetching sunglasses brands:', error);
     return [];
   }
 }

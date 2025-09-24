@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { fetchGlasses, fetchGlassesBrands, fetchGlassesCategories } from '../services/glassesApi';
-import { Product } from '../context/CartContext';
+import { fetchGlasses, fetchGlassesBrands, fetchGlassesCategories } from '@/api/services/glassesApi';
+import { Product } from '@/context/CartContext';
 
 export interface UseGlassesOptions {
   limit?: number;

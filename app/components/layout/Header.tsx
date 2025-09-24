@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { useCart } from '../context/CartContext';
+import { useCart } from '@/context/CartContext';
 
 // Icons (usando SVG simples)
 const MenuIcon = () => (

@@ -1,4 +1,4 @@
-import { Product } from '../context/CartContext';
+import { Product } from '@/context/CartContext';
 
 // Datos de ejemplo para productos
 export const sampleProducts: Product[] = [

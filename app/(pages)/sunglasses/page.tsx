@@ -1,14 +1,14 @@
 'use client';
 
 import React, { useState, useMemo } from 'react';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
-import CartSidebar from '../components/CartSidebar';
-import ProductCard from '../components/ProductCard';
-import ProductFilters, { FilterState } from '../components/ProductFilters';
-import ProductToolbar from '../components/ProductToolbar';
-import { useSunglasses } from '../hooks/useSunglasses';
-import { useStaggeredAnimation } from '../hooks/useStaggeredAnimation';
+import Header from '@/components/layout/Header';
+import Footer from '@/components/layout/Footer';
+import CartSidebar from '@/components/ui/CartSidebar';
+import ProductCard from '@/components/product/ProductCard';
+import ProductFilters, { FilterState } from '@/components/product/ProductFilters';
+import ProductToolbar from '@/components/product/ProductToolbar';
+import { useSunglasses } from '@/api/hooks/useSunglasses';
+import { useStaggeredAnimation } from '@/api/hooks/useStaggeredAnimation';
 
 const SunglassesPage: React.FC = () => {
   const [showFilters, setShowFilters] = useState(false);
