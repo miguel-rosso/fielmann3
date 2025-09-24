@@ -29,6 +29,7 @@ interface ProductToolbarProps {
   showFilters: boolean;
   setShowFilters: React.Dispatch<React.SetStateAction<boolean>>;
   productCount: number;
+  loading?: boolean;
 }
 
 const ProductToolbar: React.FC<ProductToolbarProps> = ({
@@ -38,7 +39,8 @@ const ProductToolbar: React.FC<ProductToolbarProps> = ({
   setViewMode,
   showFilters,
   setShowFilters,
-  productCount
+  productCount,
+  loading = false
 }) => {
   return (
     <div className="bg-white rounded-lg shadow-sm p-4 mb-6 section-reveal delay-toolbar">
@@ -49,11 +51,18 @@ const ProductToolbar: React.FC<ProductToolbarProps> = ({
             className="lg:hidden flex items-center gap-2 text-neutral-600 hover:text-neutral-900 cursor-pointer"
           >
             <FilterIcon />
-            Filtros
+            Filters
           </button>
-          <span className="text-sm text-neutral-600">
-            {productCount} productos encontrados
-          </span>
+          {loading ? (
+            <span className="text-sm text-neutral-500 flex items-center gap-2">
+              <div className="w-4 h-4 border-2 border-accent-500 border-t-transparent rounded-full animate-spin"></div>
+              Loading products...
+            </span>
+          ) : (
+            <span className="text-sm text-neutral-600">
+              {productCount} products found
+            </span>
+          )}
         </div>
 
         <div className="flex items-center gap-4">
@@ -69,7 +78,7 @@ const ProductToolbar: React.FC<ProductToolbarProps> = ({
             <option value="name">Sort by Name</option>
             <option value="price">Sort by Price</option>
             <option value="newest">Newest</option>
-            <option value="rating">Mejor Valorados</option>
+            <option value="rating">Best Rated</option>
           </select>
 
           {/* View Mode */}

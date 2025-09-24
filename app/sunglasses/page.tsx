@@ -1,13 +1,13 @@
 'use client';
 
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import CartSidebar from '../components/CartSidebar';
 import ProductCard from '../components/ProductCard';
 import ProductFilters, { FilterState } from '../components/ProductFilters';
 import ProductToolbar from '../components/ProductToolbar';
-import { sampleProducts } from '../data/products';
+import { useSunglasses } from '../hooks/useSunglasses';
 import { useStaggeredAnimation } from '../hooks/useStaggeredAnimation';
 
 const SunglassesPage: React.FC = () => {
@@ -20,15 +20,12 @@ const SunglassesPage: React.FC = () => {
     sortBy: 'name',
   });
 
-  // Filter products (sunglasses only)
-  const sunglassesProducts = sampleProducts.filter(product => product.category === 'sunglasses');
-  
-  // Get unique brands
-  const availableBrands = [...new Set(sunglassesProducts.map(product => product.brand))];
+  // Fetch sunglasses data from API
+  const { sunglasses, loading, error, brands } = useSunglasses();
 
   // Apply filters and sorting
   const filteredProducts = useMemo(() => {
-    let result = sunglassesProducts.filter(product => {
+    let result = sunglasses.filter(product => {
       // Price filter
       if (product.price < filters.priceRange[0] || product.price > filters.priceRange[1]) {
         return false;
@@ -64,7 +61,7 @@ const SunglassesPage: React.FC = () => {
     });
 
     return result;
-  }, [sunglassesProducts, filters]);
+  }, [sunglasses, filters]);
 
   // Use staggered animation for product cards (3 items per group, 300ms between groups)
   const { getItemClass } = useStaggeredAnimation(filteredProducts.length, 3, 300);
@@ -78,6 +75,21 @@ const SunglassesPage: React.FC = () => {
     });
   };
 
+  if (error) {
+    return (
+      <div className="min-h-screen flex flex-col">
+        <Header />
+        <main className="flex-1 bg-neutral-50 flex items-center justify-center">
+          <div className="text-center">
+            <h2 className="text-2xl font-bold text-red-600 mb-4">Error Loading Sunglasses</h2>
+            <p className="text-neutral-600">{error}</p>
+          </div>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
@@ -88,24 +100,24 @@ const SunglassesPage: React.FC = () => {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
             <div className="text-center">
               <h1 className="text-4xl lg:text-5xl font-bold font-serif text-primary-900 mb-4">
-                Gafas de Sol Premium
+                Premium Sunglasses
               </h1>
               <p className="text-xl text-neutral-600 max-w-3xl mx-auto mb-8">
-                Protege tus ojos con estilo con nuestra colección premium de gafas de sol. 
+                Protect your eyes in style with our premium sunglasses collection. 
                 UV400 protection, polarized lenses and timeless designs.
               </p>
               <div className="flex flex-wrap justify-center gap-4 text-sm text-background">
                 <div className="flex items-center gap-2 bg-white px-4 py-2 rounded-full shadow-sm ">
                   <div className="w-3 h-3 bg-yellow-400 rounded-full"></div>
-                  <span>Protección UV400</span>
+                  <span>UV400 Protection</span>
                 </div>
                 <div className="flex items-center gap-2 bg-white px-4 py-2 rounded-full shadow-sm">
                   <div className="w-3 h-3 bg-blue-400 rounded-full"></div>
-                  <span>Lentes Polarizadas</span>
+                  <span>Polarized Lenses</span>
                 </div>
                 <div className="flex items-center gap-2 bg-white px-4 py-2 rounded-full shadow-sm">
                   <div className="w-3 h-3 bg-green-400 rounded-full"></div>
-                  <span>Resistente a Impactos</span>
+                  <span>Impact Resistant</span>
                 </div>
               </div>
             </div>
@@ -118,7 +130,7 @@ const SunglassesPage: React.FC = () => {
             <ProductFilters
               filters={filters}
               setFilters={setFilters}
-              availableBrands={availableBrands}
+              availableBrands={brands}
               showFilters={showFilters}
               onClearFilters={clearFilters}
             />
@@ -134,6 +146,7 @@ const SunglassesPage: React.FC = () => {
                 showFilters={showFilters}
                 setShowFilters={setShowFilters}
                 productCount={filteredProducts.length}
+                loading={loading}
               />
 
               {/* Products Grid */}

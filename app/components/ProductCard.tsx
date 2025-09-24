@@ -20,19 +20,20 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, className = '' }) =>
   return (
     <div className={`bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:scale-105 hover:-translate-y-2 overflow-hidden group modern-card ${className}`}>
       {/* Product Image */}
-      <div className="relative h-64 overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100">
+      <div className="relative aspect-square sm:aspect-[4/3] overflow-hidden bg-white">
         <Image
           src={product.image}
           alt={product.name}
           fill
-          className="object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          className="object-contain p-4 group-hover:scale-105 transition-transform duration-500 ease-out"
         />
         
         {/* Out of Stock Overlay */}
         {!product.inStock && (
           <div className="absolute inset-0 bg-black bg-opacity-60 flex items-center justify-center backdrop-blur-sm">
             <div className="text-center">
-              <span className="text-white font-bold text-lg mb-2 block">Agotado</span>
+              <span className="text-white font-bold text-lg mb-2 block">No stock</span>
               <div className="w-16 h-1 bg-red-500 mx-auto rounded-full"></div>
             </div>
           </div>

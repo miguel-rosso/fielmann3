@@ -1,13 +1,13 @@
 'use client';
 
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import CartSidebar from '../components/CartSidebar';
 import ProductCard from '../components/ProductCard';
 import ProductFilters, { FilterState } from '../components/ProductFilters';
 import ProductToolbar from '../components/ProductToolbar';
-import { sampleProducts } from '../data/products';
+import { useAccessories } from '../hooks/useAccessories';
 import { useStaggeredAnimation } from '../hooks/useStaggeredAnimation';
 
 const AccessoriesPage: React.FC = () => {
@@ -20,15 +20,12 @@ const AccessoriesPage: React.FC = () => {
     sortBy: 'name',
   });
 
-  // Filter products (accessories only)
-  const accessoryProducts = sampleProducts.filter(product => product.category === 'accessories');
-  
-  // Get unique brands
-  const availableBrands = [...new Set(accessoryProducts.map(product => product.brand))];
+  // Fetch accessories data from API
+  const { accessories, loading, error, brands } = useAccessories();
 
   // Apply filters and sorting
   const filteredProducts = useMemo(() => {
-    let result = accessoryProducts.filter(product => {
+    let result = accessories.filter(product => {
       // Price filter
       if (product.price < filters.priceRange[0] || product.price > filters.priceRange[1]) {
         return false;
@@ -64,7 +61,7 @@ const AccessoriesPage: React.FC = () => {
     });
 
     return result;
-  }, [accessoryProducts, filters]);
+  }, [accessories, filters]);
 
   // Use staggered animation for product cards (3 items per group, 300ms between groups)
   const { getItemClass } = useStaggeredAnimation(filteredProducts.length, 3, 300);
@@ -77,6 +74,21 @@ const AccessoriesPage: React.FC = () => {
       sortBy: 'name',
     });
   };
+
+  if (error) {
+    return (
+      <div className="min-h-screen flex flex-col">
+        <Header />
+        <main className="flex-1 bg-neutral-50 flex items-center justify-center">
+          <div className="text-center">
+            <h2 className="text-2xl font-bold text-red-600 mb-4">Error Loading Accessories</h2>
+            <p className="text-neutral-600">{error}</p>
+          </div>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
 
   const accessoryCategories = [
     {
@@ -128,11 +140,11 @@ const AccessoriesPage: React.FC = () => {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
             <div className="text-center">
               <h1 className="text-4xl lg:text-5xl font-bold font-serif text-primary-900 mb-4">
-                Accesorios para Gafas
+                Eyewear Accessories
               </h1>
               <p className="text-xl text-neutral-600 max-w-3xl mx-auto mb-8">
-                Completa tu experiencia visual con nuestra colección premium de estuches, 
-                productos de limpieza, cadenas y herramientas de mantenimiento.
+                Complete your vision experience with our premium collection of cases, 
+                cleaning products, chains and maintenance tools.
               </p>
             </div>
           </div>
@@ -142,7 +154,7 @@ const AccessoriesPage: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
           <div className="text-center mb-12 section-reveal delay-300">
             <h2 className="text-3xl font-bold font-serif text-primary-900 mb-4">
-              Todo Lo Que Necesitas
+              Everything You Need
             </h2>
             <p className="text-lg text-neutral-600">
               Professional accessories to protect, clean and style your eyewear
@@ -174,8 +186,8 @@ const AccessoriesPage: React.FC = () => {
 
           {/* Products with Filters */}
           <div className="text-center mb-8">
-            <h2 className="text-2xl font-bold font-serif text-primary-900 mb-4">
-              Accesorios Disponibles
+                        <h2 className="text-2xl font-bold font-serif text-primary-900 mb-4">
+              Available Accessories
             </h2>
           </div>
 
@@ -184,7 +196,7 @@ const AccessoriesPage: React.FC = () => {
             <ProductFilters
               filters={filters}
               setFilters={setFilters}
-              availableBrands={availableBrands}
+              availableBrands={brands}
               showFilters={showFilters}
               onClearFilters={clearFilters}
             />
@@ -200,6 +212,7 @@ const AccessoriesPage: React.FC = () => {
                 showFilters={showFilters}
                 setShowFilters={setShowFilters}
                 productCount={filteredProducts.length}
+                loading={loading}
               />
 
               {/* Products Grid */}

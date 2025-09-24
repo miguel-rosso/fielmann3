@@ -7,7 +7,7 @@ import CartSidebar from '../components/CartSidebar';
 import ProductCard from '../components/ProductCard';
 import ProductFilters, { FilterState } from '../components/ProductFilters';
 import ProductToolbar from '../components/ProductToolbar';
-import { sampleProducts } from '../data/products';
+import { useContacts } from '../hooks/useContacts';
 import { useStaggeredAnimation } from '../hooks/useStaggeredAnimation';
 
 const ContactsPage: React.FC = () => {
@@ -20,15 +20,12 @@ const ContactsPage: React.FC = () => {
     sortBy: 'name',
   });
 
-  // Filter products (contacts only)
-  const contactProducts = sampleProducts.filter(product => product.category === 'contacts');
-  
-  // Get unique brands
-  const availableBrands = [...new Set(contactProducts.map(product => product.brand))];
+  // Fetch contact lenses data from API
+  const { contacts, loading, error, brands } = useContacts();
 
   // Apply filters and sorting
   const filteredProducts = useMemo(() => {
-    let result = contactProducts.filter(product => {
+    let result = contacts.filter(product => {
       // Price filter
       if (product.price < filters.priceRange[0] || product.price > filters.priceRange[1]) {
         return false;
@@ -64,7 +61,7 @@ const ContactsPage: React.FC = () => {
     });
 
     return result;
-  }, [contactProducts, filters]);
+  }, [contacts, filters]);
 
   // Use staggered animation for product cards (3 items per group, 300ms between groups)
   const { getItemClass } = useStaggeredAnimation(filteredProducts.length, 3, 300);
@@ -78,6 +75,21 @@ const ContactsPage: React.FC = () => {
     });
   };
 
+  if (error) {
+    return (
+      <div className="min-h-screen flex flex-col">
+        <Header />
+        <main className="flex-1 bg-neutral-50 flex items-center justify-center">
+          <div className="text-center">
+            <h2 className="text-2xl font-bold text-red-600 mb-4">Error Loading Contact Lenses</h2>
+            <p className="text-neutral-600">{error}</p>
+          </div>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
@@ -88,11 +100,11 @@ const ContactsPage: React.FC = () => {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
             <div className="text-center">
               <h1 className="text-4xl lg:text-5xl font-bold font-serif text-primary-900 mb-4">
-                Lentes de Contacto
+                Contact Lenses
               </h1>
               <p className="text-xl text-neutral-600 max-w-3xl mx-auto mb-8">
-                Experimenta la libertad de los lentes de contacto. Opciones diarias, semanales y mensuales 
-                para cada estilo de vida y necesidad visual.
+                Experience the freedom of contact lenses. Daily, weekly and monthly options 
+                for every lifestyle and visual need.
               </p>
               
               {/* Feature Grid */}
@@ -104,8 +116,8 @@ const ContactsPage: React.FC = () => {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                     </svg>
                   </div>
-                  <h3 className="text-lg font-semibold text-neutral-900 mb-2">Comodidad Diaria</h3>
-                  <p className="text-neutral-600">Par fresco cada día para máxima higiene y comodidad</p>
+                  <h3 className="text-lg font-semibold text-neutral-900 mb-2">Daily Comfort</h3>
+                  <p className="text-neutral-600">Fresh pair every day for maximum hygiene and comfort</p>
                 </div>
 
                 <div className="bg-white rounded-xl p-6 shadow-sm modern-card">
@@ -115,7 +127,7 @@ const ContactsPage: React.FC = () => {
                     </svg>
                   </div>
                   <h3 className="text-lg font-semibold text-neutral-900 mb-2">FDA Approved</h3>
-                  <p className="text-neutral-600">Todos los lentes cumplen estrictos estándares de seguridad y calidad</p>
+                  <p className="text-neutral-600">All lenses meet strict safety and quality standards</p>
                 </div>
 
                 <div className="bg-white rounded-xl p-6 shadow-sm modern-card">
@@ -124,7 +136,7 @@ const ContactsPage: React.FC = () => {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zM21 5a2 2 0 00-2-2h-4a2 2 0 00-2 2v12a4 4 0 004 4h4a2 2 0 002-2V5z" />
                     </svg>
                   </div>
-                  <h3 className="text-lg font-semibold text-neutral-900 mb-2">Ajuste Experto</h3>
+                  <h3 className="text-lg font-semibold text-neutral-900 mb-2">Expert Fitting</h3>
                   <p className="text-neutral-600">Professional consultation and perfect fit guarantee</p>
                 </div>
               </div>
@@ -136,10 +148,10 @@ const ContactsPage: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
           <div className="text-center mb-12 section-reveal delay-300">
             <h2 className="text-3xl font-bold font-serif text-primary-900 mb-4">
-              Elige Tu Lente Perfecto
+              Choose Your Perfect Lens
             </h2>
             <p className="text-lg text-neutral-600">
-              Diferentes estilos de vida necesitan diferentes soluciones
+              Different lifestyles need different solutions
             </p>
           </div>
 
@@ -149,13 +161,13 @@ const ContactsPage: React.FC = () => {
                 <div className="w-16 h-16 bg-gradient-to-br from-blue-400 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-4 pulse-glow">
                   <span className="text-white font-bold text-lg">1</span>
                 </div>
-                <h3 className="text-xl font-bold text-neutral-900 mb-3">Lentes Diarios</h3>
+                <h3 className="text-xl font-bold text-neutral-900 mb-3">Daily Lenses</h3>
                 <p className="text-neutral-600 mb-4">
                   Perfect for occasional use, travel or trying lenses for the first time. 
-                  No requieren limpieza - solo úsalos y deséchalos.
+                  No cleaning required - just use and dispose.
                 </p>
                 <div className="text-sm text-neutral-500">
-                  Ideal para: Usuarios nuevos, estilos de vida activos, alergias
+                  Ideal for: New users, active lifestyles, allergies
                 </div>
               </div>
             </div>
@@ -165,13 +177,13 @@ const ContactsPage: React.FC = () => {
                 <div className="w-16 h-16 bg-gradient-to-br from-green-400 to-green-600 rounded-full flex items-center justify-center mx-auto mb-4 pulse-glow">
                   <span className="text-white font-bold text-lg">7</span>
                 </div>
-                <h3 className="text-xl font-bold text-neutral-900 mb-3">Lentes Semanales</h3>
+                <h3 className="text-xl font-bold text-neutral-900 mb-3">Weekly Lenses</h3>
                 <p className="text-neutral-600 mb-4">
-                  Gran equilibrio entre conveniencia y valor. El reemplazo semanal reduce 
-                  el riesgo de acumulación de proteínas siendo rentable.
+                  Great balance between convenience and value. Weekly replacement reduces 
+                  the risk of protein buildup while being cost-effective.
                 </p>
                 <div className="text-sm text-neutral-500">
-                  Ideal para: Uso regular, estilo de vida equilibrado
+                  Ideal for: Regular use, balanced lifestyle
                 </div>
               </div>
             </div>
@@ -181,13 +193,13 @@ const ContactsPage: React.FC = () => {
                 <div className="w-16 h-16 bg-gradient-to-br from-purple-400 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-4 pulse-glow">
                   <span className="text-white font-bold text-lg">30</span>
                 </div>
-                <h3 className="text-xl font-bold text-neutral-900 mb-3">Lentes Mensuales</h3>
+                <h3 className="text-xl font-bold text-neutral-900 mb-3">Monthly Lenses</h3>
                 <p className="text-neutral-600 mb-4">
                   More affordable for daily use. Advanced materials provide 
-                  excelente permeabilidad al oxígeno para comodidad todo el día.
+                  excellent oxygen permeability for all-day comfort.
                 </p>
                 <div className="text-sm text-neutral-500">
-                  Ideal para: Uso diario, usuarios conscientes del presupuesto
+                  Ideal for: Daily use, budget-conscious users
                 </div>
               </div>
             </div>
@@ -196,7 +208,7 @@ const ContactsPage: React.FC = () => {
           {/* Products with Filters */}
           <div className="text-center mb-8 section-reveal delay-filters">
             <h2 className="text-2xl font-bold font-serif text-primary-900 mb-4">
-              Nuestra Colección de Lentes de Contacto
+              Our Contact Lens Collection
             </h2>
           </div>
 
@@ -205,7 +217,7 @@ const ContactsPage: React.FC = () => {
             <ProductFilters
               filters={filters}
               setFilters={setFilters}
-              availableBrands={availableBrands}
+              availableBrands={brands}
               showFilters={showFilters}
               onClearFilters={clearFilters}
             />
@@ -221,6 +233,7 @@ const ContactsPage: React.FC = () => {
                 showFilters={showFilters}
                 setShowFilters={setShowFilters}
                 productCount={filteredProducts.length}
+                loading={loading}
               />
 
               {/* Products Grid */}
@@ -267,11 +280,11 @@ const ContactsPage: React.FC = () => {
         <div className="bg-primary-900 text-white py-16 section-reveal delay-grid">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 className="text-3xl font-bold font-serif mb-4">
-              ¿Necesitas Ayuda para Elegir?
+              Need Help Choosing?
             </h2>
             <p className="text-xl text-primary-200 mb-8">
               Our certified optometrists will help you find the perfect contact lenses 
-              para tus ojos y estilo de vida.
+              for your eyes and lifestyle.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center group-reveal delay-300">
               <button className="btn-accent">

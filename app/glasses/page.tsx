@@ -1,14 +1,14 @@
 'use client';
 
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import CartSidebar from '../components/CartSidebar';
 import ProductCard from '../components/ProductCard';
 import ProductFilters, { FilterState } from '../components/ProductFilters';
 import ProductToolbar from '../components/ProductToolbar';
-import { sampleProducts } from '../data/products';
 import { useStaggeredAnimation } from '../hooks/useStaggeredAnimation';
+import { useGlasses } from '../hooks/useGlasses';
 
 const GlassesPage: React.FC = () => {
   const [showFilters, setShowFilters] = useState(false);
@@ -20,15 +20,14 @@ const GlassesPage: React.FC = () => {
     sortBy: 'name',
   });
 
-  // Filter products (glasses only)
-  const glassesProducts = sampleProducts.filter(product => product.category === 'glasses');
-  
-  // Get unique brands
-  const availableBrands = [...new Set(glassesProducts.map(product => product.brand))];
+  // Fetch glasses data from API
+  const { glasses, loading, error, brands } = useGlasses({ limit: 50 });
 
   // Apply filters and sorting
   const filteredProducts = useMemo(() => {
-    let result = glassesProducts.filter(product => {
+    if (!glasses.length) return [];
+    
+    let result = glasses.filter(product => {
       // Price filter
       if (product.price < filters.priceRange[0] || product.price > filters.priceRange[1]) {
         return false;
@@ -55,7 +54,7 @@ const GlassesPage: React.FC = () => {
         case 'name':
           return a.name.localeCompare(b.name);
         case 'newest':
-          return b.id.localeCompare(a.id); // Simulate newer products having higher IDs
+          return parseInt(b.id) - parseInt(a.id); // Newer products have higher IDs
         case 'rating':
           return Math.random() - 0.5; // Random for demo
         default:
@@ -64,7 +63,7 @@ const GlassesPage: React.FC = () => {
     });
 
     return result;
-  }, [glassesProducts, filters]);
+  }, [glasses, filters]);
 
   // Use staggered animation for product cards (3 items per group, 300ms between groups)
   const { getItemClass } = useStaggeredAnimation(filteredProducts.length, 3, 300);
@@ -93,6 +92,12 @@ const GlassesPage: React.FC = () => {
               <p className="text-lg text-neutral-600 max-w-2xl mx-auto">
                 Discover our premium collection of prescription glasses. From classic to contemporary designs, find the perfect frame for your style.
               </p>
+              {error && (
+                <div className="mt-4 p-4 bg-red-50 border border-red-200 rounded-lg max-w-md mx-auto">
+                  <p className="text-red-600 font-medium">Error loading glasses</p>
+                  <p className="text-red-500 text-sm mt-1">{error}</p>
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -103,7 +108,7 @@ const GlassesPage: React.FC = () => {
             <ProductFilters
               filters={filters}
               setFilters={setFilters}
-              availableBrands={availableBrands}
+              availableBrands={brands}
               showFilters={showFilters}
               onClearFilters={clearFilters}
             />
@@ -119,24 +124,40 @@ const GlassesPage: React.FC = () => {
                 showFilters={showFilters}
                 setShowFilters={setShowFilters}
                 productCount={filteredProducts.length}
+                loading={loading}
               />
 
               {/* Products Grid */}
-              <div className={`${viewMode === 'grid' 
-                ? 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6' 
-                : 'space-y-4'
-              } section-reveal delay-grid`}>
-                {filteredProducts.map((product, index) => (
-                  <ProductCard 
-                    key={product.id} 
-                    product={product}
-                    className={`${viewMode === 'list' ? 'flex-row' : ''} ${getItemClass(index)}`}
-                  />
-                ))}
-              </div>
+              {loading ? (
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {[...Array(6)].map((_, index) => (
+                    <div key={index} className="bg-white rounded-2xl shadow-lg overflow-hidden animate-pulse">
+                      <div className="h-64 bg-gray-200"></div>
+                      <div className="p-6">
+                        <div className="h-4 bg-gray-200 rounded mb-2"></div>
+                        <div className="h-4 bg-gray-200 rounded w-3/4 mb-4"></div>
+                        <div className="h-6 bg-gray-200 rounded w-1/2"></div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div className={`${viewMode === 'grid' 
+                  ? 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6' 
+                  : 'space-y-4'
+                } section-reveal delay-grid`}>
+                  {filteredProducts.map((product, index) => (
+                    <ProductCard 
+                      key={product.id} 
+                      product={product}
+                      className={`${viewMode === 'list' ? 'flex-row' : ''} ${getItemClass(index)}`}
+                    />
+                  ))}
+                </div>
+              )}
 
               {/* No Results */}
-              {filteredProducts.length === 0 && (
+              {!loading && filteredProducts.length === 0 && (
                 <div className="text-center py-12">
                   <div className="text-neutral-400 mb-4">
                     <svg className="w-16 h-16 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
