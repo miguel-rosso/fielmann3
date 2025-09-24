@@ -1,49 +1,59 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback, useRef } from 'react';
 
-export const useStaggeredAnimation = (itemCount: number, delayBetweenItems: number = 150) => {
-  const [animatedItems, setAnimatedItems] = useState(new Set<number>());
+export const useStaggeredAnimation = (itemCount: number, itemsPerGroup: number = 3, delayBetweenGroups: number = 200) => {
+  const [visibleItems, setVisibleItems] = useState<Set<number>>(new Set());
+  const timeoutsRef = useRef<NodeJS.Timeout[]>([]);
+
+  const resetAnimation = useCallback(() => {
+    // Clear existing timeouts
+    timeoutsRef.current.forEach(timeout => clearTimeout(timeout));
+    timeoutsRef.current = [];
+    
+    // Reset visible items
+    setVisibleItems(new Set());
+  }, []);
 
   useEffect(() => {
-    // Reset animation state
-    setAnimatedItems(new Set());
+    // Clear any existing timeouts first
+    timeoutsRef.current.forEach(timeout => clearTimeout(timeout));
+    timeoutsRef.current = [];
+    
+    // Reset visible items
+    setVisibleItems(new Set());
     
     if (itemCount === 0) return;
 
-    const timeouts: NodeJS.Timeout[] = [];
+    const groupCount = Math.ceil(itemCount / itemsPerGroup);
 
-    // Animate items in groups of 3 to reduce visual chaos
-    const groupSize = 3;
-    const groupCount = Math.ceil(itemCount / groupSize);
-
-    for (let group = 0; group < groupCount; group++) {
+    for (let groupIndex = 0; groupIndex < groupCount; groupIndex++) {
       const timeout = setTimeout(() => {
-        setAnimatedItems(prev => {
+        setVisibleItems(prev => {
           const newSet = new Set(prev);
-          for (let i = 0; i < groupSize; i++) {
-            const itemIndex = group * groupSize + i;
-            if (itemIndex < itemCount) {
-              newSet.add(itemIndex);
-            }
+          const startIndex = groupIndex * itemsPerGroup;
+          const endIndex = Math.min(startIndex + itemsPerGroup, itemCount);
+          
+          for (let i = startIndex; i < endIndex; i++) {
+            newSet.add(i);
           }
+          
           return newSet;
         });
-      }, group * delayBetweenItems);
+      }, groupIndex * delayBetweenGroups + 100); // Small initial delay
       
-      timeouts.push(timeout);
+      timeoutsRef.current.push(timeout);
     }
 
     return () => {
-      timeouts.forEach(clearTimeout);
+      timeoutsRef.current.forEach(timeout => clearTimeout(timeout));
+      timeoutsRef.current = [];
     };
-  }, [itemCount, delayBetweenItems]);
+  }, [itemCount, itemsPerGroup, delayBetweenGroups]);
 
-  const getItemClass = (index: number): string => {
-    return animatedItems.has(index) 
-      ? 'opacity-100 transform transition-all duration-600 ease-out' 
-      : 'opacity-0 transform translate-y-4 transition-all duration-600 ease-out';
-  };
+  const getItemClass = useCallback((index: number) => {
+    return visibleItems.has(index) ? 'reveal-animation animate-in' : 'opacity-0 translate-y-4';
+  }, [visibleItems]);
 
-  return { getItemClass };
+  return { getItemClass, resetAnimation };
 };

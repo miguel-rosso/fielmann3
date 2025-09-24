@@ -5,33 +5,10 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import CartSidebar from '../components/CartSidebar';
 import ProductCard from '../components/ProductCard';
+import ProductFilters, { FilterState } from '../components/ProductFilters';
+import ProductToolbar from '../components/ProductToolbar';
 import { sampleProducts } from '../data/products';
 import { useStaggeredAnimation } from '../hooks/useStaggeredAnimation';
-
-const FilterIcon = () => (
-  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.207A1 1 0 013 6.5V4z" />
-  </svg>
-);
-
-const GridIcon = () => (
-  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
-  </svg>
-);
-
-const ListIcon = () => (
-  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 10h16M4 14h16M4 18h16" />
-  </svg>
-);
-
-interface FilterState {
-  priceRange: [number, number];
-  brands: string[];
-  inStock: boolean | null;
-  sortBy: 'name' | 'price' | 'newest' | 'rating';
-}
 
 const GlassesPage: React.FC = () => {
   const [showFilters, setShowFilters] = useState(false);
@@ -89,17 +66,8 @@ const GlassesPage: React.FC = () => {
     return result;
   }, [glassesProducts, filters]);
 
-  // Use staggered animation for product cards
-  const { getItemClass } = useStaggeredAnimation(filteredProducts.length, 150);
-
-  const handleBrandToggle = (brand: string) => {
-    setFilters(prev => ({
-      ...prev,
-      brands: prev.brands.includes(brand)
-        ? prev.brands.filter(b => b !== brand)
-        : [...prev.brands, brand]
-    }));
-  };
+  // Use staggered animation for product cards (3 items per group, 300ms between groups)
+  const { getItemClass } = useStaggeredAnimation(filteredProducts.length, 3, 300);
 
   const clearFilters = () => {
     setFilters({
@@ -132,166 +100,26 @@ const GlassesPage: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="flex flex-col lg:flex-row gap-8">
             {/* Filters Sidebar */}
-            <div className={`lg:w-64 ${showFilters ? 'block' : 'hidden lg:block'} section-reveal delay-filters`}>
-              <div className="bg-white rounded-lg shadow-sm p-6 sticky top-24">
-                <div className="flex items-center justify-between mb-6">
-                  <h3 className="font-semibold text-neutral-900">Filters</h3>
-                  <button
-                    onClick={clearFilters}
-                    className="text-sm text-accent-600 hover:text-accent-700"
-                  >
-                    Clear all
-                  </button>
-                </div>
-
-                {/* Price Range */}
-                <div className="mb-6">
-                  <label className="block text-sm font-medium text-neutral-700 mb-2">
-                    Price Range
-                  </label>
-                  <div className="space-y-2">
-                    <input
-                      type="range"
-                      min="0"
-                      max="500"
-                      value={filters.priceRange[0]}
-                      onChange={(e) => setFilters(prev => ({
-                        ...prev,
-                        priceRange: [parseInt(e.target.value), prev.priceRange[1]]
-                      }))}
-                      className="w-full"
-                    />
-                    <input
-                      type="range"
-                      min="0"
-                      max="500"
-                      value={filters.priceRange[1]}
-                      onChange={(e) => setFilters(prev => ({
-                        ...prev,
-                        priceRange: [prev.priceRange[0], parseInt(e.target.value)]
-                      }))}
-                      className="w-full"
-                    />
-                    <div className="flex justify-between text-sm text-neutral-600">
-                      <span>€{filters.priceRange[0]}</span>
-                      <span>€{filters.priceRange[1]}</span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Brands */}
-                <div className="mb-6">
-                  <label className="block text-sm font-medium text-neutral-700 mb-2">
-                    Brand
-                  </label>
-                  <div className="space-y-2 max-h-40 overflow-y-auto">
-                    {availableBrands.map(brand => (
-                      <label key={brand} className="flex items-center">
-                        <input
-                          type="checkbox"
-                          checked={filters.brands.includes(brand)}
-                          onChange={() => handleBrandToggle(brand)}
-                          className="rounded border-neutral-300 text-accent-600 focus:ring-accent-500"
-                        />
-                        <span className="ml-2 text-sm text-neutral-700">{brand}</span>
-                      </label>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Availability */}
-                <div className="mb-6">
-                  <label className="block text-sm font-medium text-neutral-700 mb-2">
-                    Availability
-                  </label>
-                  <div className="space-y-2">
-                    <label className="flex items-center">
-                      <input
-                        type="radio"
-                        name="stock"
-                        checked={filters.inStock === null}
-                        onChange={() => setFilters(prev => ({ ...prev, inStock: null }))}
-                        className="text-accent-600 focus:ring-accent-500"
-                      />
-                      <span className="ml-2 text-sm text-neutral-700">All products</span>
-                    </label>
-                    <label className="flex items-center">
-                      <input
-                        type="radio"
-                        name="stock"
-                        checked={filters.inStock === true}
-                        onChange={() => setFilters(prev => ({ ...prev, inStock: true }))}
-                        className="text-accent-600 focus:ring-accent-500"
-                      />
-                      <span className="ml-2 text-sm text-neutral-700">In stock</span>
-                    </label>
-                    <label className="flex items-center">
-                      <input
-                        type="radio"
-                        name="stock"
-                        checked={filters.inStock === false}
-                        onChange={() => setFilters(prev => ({ ...prev, inStock: false }))}
-                        className="text-accent-600 focus:ring-accent-500"
-                      />
-                      <span className="ml-2 text-sm text-neutral-700">Out of stock</span>
-                    </label>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <ProductFilters
+              filters={filters}
+              setFilters={setFilters}
+              availableBrands={availableBrands}
+              showFilters={showFilters}
+              onClearFilters={clearFilters}
+            />
 
             {/* Products Section */}
             <div className="flex-1">
               {/* Toolbar */}
-              <div className="bg-white rounded-lg shadow-sm p-4 mb-6 section-reveal delay-toolbar">
-                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-                  <div className="flex items-center gap-4">
-                    <button
-                      onClick={() => setShowFilters(!showFilters)}
-                      className="lg:hidden flex items-center gap-2 text-neutral-600 hover:text-neutral-900"
-                    >
-                      <FilterIcon />
-                      Filters
-                    </button>
-                    <span className="text-sm text-neutral-600">
-                      {filteredProducts.length} products found
-                    </span>
-                  </div>
-
-                  <div className="flex items-center gap-4">
-                    {/* Sort */}
-                    <select
-                      value={filters.sortBy}
-                      onChange={(e) => setFilters(prev => ({ 
-                        ...prev, 
-                        sortBy: e.target.value as FilterState['sortBy']
-                      }))}
-                      className="border border-neutral-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-accent-500 focus:border-transparent text-background"
-                    >
-                      <option value="name">Sort by Name</option>
-                      <option value="price">Sort by Price</option>
-                      <option value="newest">Newest First</option>
-                      <option value="rating">Highest Rated</option>
-                    </select>
-
-                    {/* View Mode */}
-                    <div className="flex border border-neutral-300 rounded-lg overflow-hidden">
-                      <button
-                        onClick={() => setViewMode('grid')}
-                        className={`p-2 ${viewMode === 'grid' ? 'bg-accent-500 text-white' : 'text-neutral-600 hover:bg-neutral-100'}`}
-                      >
-                        <GridIcon />
-                      </button>
-                      <button
-                        onClick={() => setViewMode('list')}
-                        className={`p-2 ${viewMode === 'list' ? 'bg-accent-500 text-white' : 'text-neutral-600 hover:bg-neutral-100'}`}
-                      >
-                        <ListIcon />
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <ProductToolbar
+                filters={filters}
+                setFilters={setFilters}
+                viewMode={viewMode}
+                setViewMode={setViewMode}
+                showFilters={showFilters}
+                setShowFilters={setShowFilters}
+                productCount={filteredProducts.length}
+              />
 
               {/* Products Grid */}
               <div className={`${viewMode === 'grid' 
