@@ -114,7 +114,7 @@ const ContactsPage: React.FC = () => {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                   </div>
-                  <h3 className="text-lg font-semibold text-neutral-900 mb-2">Aprobado por FDA</h3>
+                  <h3 className="text-lg font-semibold text-neutral-900 mb-2">FDA Approved</h3>
                   <p className="text-neutral-600">Todos los lentes cumplen estrictos estándares de seguridad y calidad</p>
                 </div>
 
@@ -125,7 +125,7 @@ const ContactsPage: React.FC = () => {
                     </svg>
                   </div>
                   <h3 className="text-lg font-semibold text-neutral-900 mb-2">Ajuste Experto</h3>
-                  <p className="text-neutral-600">Consulta profesional y garantía de ajuste perfecto</p>
+                  <p className="text-neutral-600">Professional consultation and perfect fit guarantee</p>
                 </div>
               </div>
             </div>
@@ -151,7 +151,7 @@ const ContactsPage: React.FC = () => {
                 </div>
                 <h3 className="text-xl font-bold text-neutral-900 mb-3">Lentes Diarios</h3>
                 <p className="text-neutral-600 mb-4">
-                  Perfectos para uso ocasional, viajes o para probar lentes por primera vez. 
+                  Perfect for occasional use, travel or trying lenses for the first time. 
                   No requieren limpieza - solo úsalos y deséchalos.
                 </p>
                 <div className="text-sm text-neutral-500">
@@ -183,7 +183,7 @@ const ContactsPage: React.FC = () => {
                 </div>
                 <h3 className="text-xl font-bold text-neutral-900 mb-3">Lentes Mensuales</h3>
                 <p className="text-neutral-600 mb-4">
-                  Más económicos para uso diario. Materiales avanzados proporcionan 
+                  More affordable for daily use. Advanced materials provide 
                   excelente permeabilidad al oxígeno para comodidad todo el día.
                 </p>
                 <div className="text-sm text-neutral-500">
@@ -246,16 +246,16 @@ const ContactsPage: React.FC = () => {
                     </svg>
                   </div>
                   <h3 className="text-lg font-medium text-neutral-900 mb-2">
-                    No se encontraron productos
+                    No products found
                   </h3>
                   <p className="text-neutral-500 mb-4">
-                    Intenta ajustar tus filtros para ver más resultados.
+                    Try adjusting your filters to see more results.
                   </p>
                   <button
                     onClick={clearFilters}
                     className="btn-primary"
                   >
-                    Limpiar Filtros
+                    Clear Filters
                   </button>
                 </div>
               )}
@@ -270,15 +270,15 @@ const ContactsPage: React.FC = () => {
               ¿Necesitas Ayuda para Elegir?
             </h2>
             <p className="text-xl text-primary-200 mb-8">
-              Nuestros optometristas certificados te ayudarán a encontrar los lentes de contacto perfectos 
+              Our certified optometrists will help you find the perfect contact lenses 
               para tus ojos y estilo de vida.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center group-reveal delay-300">
               <button className="btn-accent">
-                Reservar Examen Visual
+                Book Eye Exam
               </button>
               <button className="bg-transparent border-2 border-white text-white hover:bg-white hover:text-primary-900 px-8 py-3 rounded-lg font-medium transition-all duration-200">
-                Contactar Especialista
+                Contact Specialist
               </button>
             </div>
           </div>

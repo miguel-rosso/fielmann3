@@ -92,10 +92,10 @@ const SunglassesPage: React.FC = () => {
               </h1>
               <p className="text-xl text-neutral-600 max-w-3xl mx-auto mb-8">
                 Protege tus ojos con estilo con nuestra colección premium de gafas de sol. 
-                Protección UV400, lentes polarizadas y diseños atemporales.
+                UV400 protection, polarized lenses and timeless designs.
               </p>
-              <div className="flex flex-wrap justify-center gap-4 text-sm">
-                <div className="flex items-center gap-2 bg-white px-4 py-2 rounded-full shadow-sm">
+              <div className="flex flex-wrap justify-center gap-4 text-sm text-background">
+                <div className="flex items-center gap-2 bg-white px-4 py-2 rounded-full shadow-sm ">
                   <div className="w-3 h-3 bg-yellow-400 rounded-full"></div>
                   <span>Protección UV400</span>
                 </div>
@@ -159,16 +159,16 @@ const SunglassesPage: React.FC = () => {
                     </svg>
                   </div>
                   <h3 className="text-lg font-medium text-neutral-900 mb-2">
-                    No se encontraron productos
+                    No products found
                   </h3>
                   <p className="text-neutral-500 mb-4">
-                    Intenta ajustar tus filtros para ver más resultados.
+                    Try adjusting your filters to see more results.
                   </p>
                   <button
                     onClick={clearFilters}
                     className="btn-primary"
                   >
-                    Limpiar Filtros
+                    Clear Filters
                   </button>
                 </div>
               )}

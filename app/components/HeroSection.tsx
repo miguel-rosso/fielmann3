@@ -12,7 +12,7 @@ const ArrowRightIcon = () => (
 );
 
 const HeroSection: React.FC = () => {
-  const { getItemClass } = useStaggeredAnimation(8, 3, 300); // 8 elementos, 3 por grupo, 300ms delay
+  const { getItemClass } = useStaggeredAnimation(8, 3, 300); // 8 elements, 3 per group, 300ms delay
 
   return (
     <section className="relative bg-gradient-to-br from-primary-50 to-accent-50 overflow-hidden section-reveal">
@@ -22,24 +22,24 @@ const HeroSection: React.FC = () => {
             {/* Content */}
             <div className="text-center lg:text-left">
               <h1 className={`text-4xl lg:text-6xl font-bold font-serif text-primary-900 mb-6 leading-tight ${getItemClass(0)}`}>
-                Tu <span className="text-gradient">Visión</span> Perfecta
+                Your <span className="text-gradient">Perfect</span> Vision
                 <span className={`block text-gradient ${getItemClass(1)}`}>
-                  Comienza Aquí
+                  Starts Here
                 </span>
               </h1>
               
               <p className={`text-lg lg:text-xl text-neutral-600 mb-8 max-w-2xl ${getItemClass(2)}`}>
-                Descubre nuestra colección exclusiva de gafas de diseño, lentes de contacto 
-                premium y accesorios de alta calidad. Más de 50 años creando momentos perfectos.
+                Discover our exclusive collection of designer eyewear, premium contact lenses 
+                and high-quality accessories. Over 50 years creating perfect moments.
               </p>
 
               <div className={`flex flex-col sm:flex-row gap-4 justify-center lg:justify-start ${getItemClass(3)}`}>
                 <Link href="/glasses" className="btn-primary inline-flex items-center gap-2 group">
-                  <span>Explorar Gafas</span>
+                  <span>Explore Glasses</span>
                   <ArrowRightIcon />
                 </Link>
                 <Link href="/sunglasses" className="btn-secondary inline-flex items-center gap-2 group">
-                  <span>Ver Gafas de Sol</span>
+                  <span>View Sunglasses</span>
                   <ArrowRightIcon />
                 </Link>
               </div>
@@ -48,15 +48,15 @@ const HeroSection: React.FC = () => {
               <div className="mt-12 grid grid-cols-3 gap-6">
                 <div className={`text-center glass-card rounded-xl p-4 modern-card ${getItemClass(4)}`}>
                   <div className="text-2xl font-bold text-gradient mb-1 pulse-glow">5000+</div>
-                  <div className="text-sm text-neutral-600 font-medium">Marcos Premium</div>
+                  <div className="text-sm text-neutral-600 font-medium">Premium Frames</div>
                 </div>
                 <div className={`text-center glass-card rounded-xl p-4 modern-card ${getItemClass(5)}`}>
                   <div className="text-2xl font-bold text-gradient mb-1 pulse-glow">30</div>
-                  <div className="text-sm text-neutral-600 font-medium">Días Devolución</div>
+                  <div className="text-sm text-neutral-600 font-medium">Day Returns</div>
                 </div>
                 <div className={`text-center glass-card rounded-xl p-4 modern-card ${getItemClass(6)}`}>
                   <div className="text-2xl font-bold text-gradient mb-1 pulse-glow">4.9</div>
-                  <div className="text-sm text-neutral-600 font-medium">Rating Cliente</div>
+                  <div className="text-sm text-neutral-600 font-medium">Customer Rating</div>
                 </div>
               </div>
             </div>
@@ -84,8 +84,8 @@ const HeroSection: React.FC = () => {
                     </svg>
                   </div>
                   <div>
-                    <div className="font-semibold text-neutral-900">Envío Gratis</div>
-                    <div className="text-sm text-neutral-500">En pedidos +€50</div>
+                    <div className="font-semibold text-neutral-900">Free Shipping</div>
+                    <div className="text-sm text-neutral-500">On orders +€50</div>
                   </div>
                 </div>
               </div>
@@ -98,8 +98,8 @@ const HeroSection: React.FC = () => {
                     </svg>
                   </div>
                   <div>
-                    <div className="font-semibold text-neutral-900">Garantía 2 Años</div>
-                    <div className="text-sm text-neutral-500">En todos los marcos</div>
+                    <div className="font-semibold text-neutral-900">2 Year Warranty</div>
+                    <div className="text-sm text-neutral-500">On all frames</div>
                   </div>
                 </div>
               </div>

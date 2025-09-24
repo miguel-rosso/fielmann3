@@ -145,7 +145,7 @@ const AccessoriesPage: React.FC = () => {
               Todo Lo Que Necesitas
             </h2>
             <p className="text-lg text-neutral-600">
-              Accesorios profesionales para proteger, limpiar y estilizar tus gafas
+              Professional accessories to protect, clean and style your eyewear
             </p>
           </div>
 
@@ -225,16 +225,16 @@ const AccessoriesPage: React.FC = () => {
                     </svg>
                   </div>
                   <h3 className="text-lg font-medium text-neutral-900 mb-2">
-                    No se encontraron productos
+                    No products found
                   </h3>
                   <p className="text-neutral-500 mb-4">
-                    Intenta ajustar tus filtros para ver más resultados.
+                    Try adjusting your filters to see more results.
                   </p>
                   <button
                     onClick={clearFilters}
                     className="btn-primary"
                   >
-                    Limpiar Filtros
+                    Clear Filters
                   </button>
                 </div>
               )}

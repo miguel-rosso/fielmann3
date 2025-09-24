@@ -66,9 +66,9 @@ const ProductToolbar: React.FC<ProductToolbarProps> = ({
             }))}
             className="border border-neutral-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-accent-500 focus:border-transparent text-background cursor-pointer"
           >
-            <option value="name">Ordenar por Nombre</option>
-            <option value="price">Ordenar por Precio</option>
-            <option value="newest">Más Nuevos</option>
+            <option value="name">Sort by Name</option>
+            <option value="price">Sort by Price</option>
+            <option value="newest">Newest</option>
             <option value="rating">Mejor Valorados</option>
           </select>
 

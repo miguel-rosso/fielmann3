@@ -37,19 +37,19 @@ const ProductFilters: React.FC<ProductFiltersProps> = ({
     <div className={`lg:w-64 ${showFilters ? 'block' : 'hidden lg:block'} section-reveal delay-filters`}>
       <div className="bg-white rounded-lg shadow-sm p-6 sticky top-24">
         <div className="flex items-center justify-between mb-6">
-          <h3 className="font-semibold text-neutral-900">Filtros</h3>
+          <h3 className="font-semibold text-neutral-900">Filters</h3>
           <button
             onClick={onClearFilters}
             className="text-sm text-accent-600 hover:text-accent-700 cursor-pointer"
           >
-            Limpiar todo
+            Clear all
           </button>
         </div>
 
         {/* Price Range */}
         <div className="mb-6">
           <label className="block text-sm font-medium text-neutral-700 mb-2">
-            Rango de Precio
+            Price Range
           </label>
           <div className="space-y-2">
             <input
@@ -84,7 +84,7 @@ const ProductFilters: React.FC<ProductFiltersProps> = ({
         {/* Brands */}
         <div className="mb-6">
           <label className="block text-sm font-medium text-neutral-700 mb-2">
-            Marca
+            Brand
           </label>
           <div className="space-y-2 max-h-40 overflow-y-auto">
             {availableBrands.map(brand => (
@@ -115,7 +115,7 @@ const ProductFilters: React.FC<ProductFiltersProps> = ({
                 onChange={() => setFilters(prev => ({ ...prev, inStock: null }))}
                 className="text-accent-600 focus:ring-accent-500 cursor-pointer"
               />
-              <span className="ml-2 text-sm text-neutral-700">Todos los productos</span>
+              <span className="ml-2 text-sm text-neutral-700">All products</span>
             </label>
             <label className="flex items-center cursor-pointer">
               <input

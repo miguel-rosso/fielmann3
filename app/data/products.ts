@@ -191,7 +191,7 @@ export const sampleProducts: Product[] = [
   },
 ];
 
-// Información de tiendas
+// Store information
 export const shopInfo = {
   10004: { country: 'Germany', code: 'DE', name: 'Germany Store' },
   10001: { country: 'Austria', code: 'AT', name: 'Austria Store' },

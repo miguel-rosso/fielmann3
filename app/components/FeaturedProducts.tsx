@@ -14,7 +14,7 @@ const ArrowRightIcon = () => (
 
 const FeaturedProducts: React.FC = () => {
   const featuredProducts = getFeaturedProducts(8);
-  const { getItemClass } = useStaggeredAnimation(featuredProducts.length + 2, 3, 300); // productos + header + botón
+  const { getItemClass } = useStaggeredAnimation(featuredProducts.length + 2, 3, 300); // products + header + button
 
   return (
     <section className="py-16 lg:py-24 bg-white section-reveal">
@@ -22,10 +22,10 @@ const FeaturedProducts: React.FC = () => {
         {/* Section Header */}
         <div className={`text-center mb-12 ${getItemClass(0)}`}>
           <h2 className="text-3xl lg:text-4xl font-bold font-serif text-primary-900 mb-4">
-            Productos Destacados
+            Featured Products
           </h2>
           <p className="text-lg text-neutral-600 max-w-2xl mx-auto">
-            Descubre nuestras gafas más populares, cuidadosamente seleccionadas por estilo, calidad y comodidad.
+            Discover our most popular eyewear, carefully selected for style, quality, and comfort.
           </p>
         </div>
 
@@ -46,7 +46,7 @@ const FeaturedProducts: React.FC = () => {
             href="/glasses"
             className="inline-flex items-center gap-2 btn-secondary"
           >
-            Ver Todos los Productos
+            View All Products
             <ArrowRightIcon />
           </Link>
         </div>

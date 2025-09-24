@@ -31,7 +31,7 @@ const CategoryCard: React.FC<CategoryCardProps> = ({ title, description, image, 
             <h3 className="text-xl font-bold mb-2">{title}</h3>
             <p className="text-sm opacity-90 mb-3">{description}</p>
             <div className="flex items-center justify-between">
-              <span className="text-sm font-medium">{count}+ estilos</span>
+              <span className="text-sm font-medium">{count}+ styles</span>
               <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center group-hover:bg-white/30 transition-colors">
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
@@ -46,33 +46,33 @@ const CategoryCard: React.FC<CategoryCardProps> = ({ title, description, image, 
 };
 
 const CategoriesSection: React.FC = () => {
-  const { getItemClass } = useStaggeredAnimation(6, 3, 300); // 6 elementos (header + 4 categorías + CTA), 3 por grupo, 300ms delay
+  const { getItemClass } = useStaggeredAnimation(6, 3, 300); // 6 elements (header + 4 categories + CTA), 3 per group, 300ms delay
 
   const categories = [
     {
-      title: 'Gafas Graduadas',
-      description: 'Monturas clásicas y modernas para uso diario',
+      title: 'Prescription Glasses',
+      description: 'Classic and modern frames for everyday wear',
       image: '/api/placeholder/400/300',
       href: '/glasses',
       count: 150,
     },
     {
-      title: 'Gafas de Sol',
-      description: 'Protección UV con estilo incomparable',
+      title: 'Sunglasses',
+      description: 'UV protection with uncompromising style',
       image: '/api/placeholder/400/300',
       href: '/sunglasses',
       count: 120,
     },
     {
-      title: 'Lentes de Contacto',
-      description: 'Opciones diarias, semanales y mensuales',
+      title: 'Contact Lenses',
+      description: 'Daily, weekly, and monthly options',
       image: '/api/placeholder/400/300',
       href: '/contacts',
       count: 50,
     },
     {
-      title: 'Accesorios',
-      description: 'Estuches, cadenas y productos de limpieza',
+      title: 'Accessories',
+      description: 'Cases, chains, and cleaning supplies',
       image: '/api/placeholder/400/300',
       href: '/accessories',
       count: 80,
@@ -85,10 +85,10 @@ const CategoriesSection: React.FC = () => {
         {/* Section Header */}
         <div className={`text-center mb-12 ${getItemClass(0)}`}>
           <h2 className="text-3xl lg:text-4xl font-bold font-serif text-primary-900 mb-4">
-            Comprar por Categoría
+            Shop by Category
           </h2>
           <p className="text-lg text-neutral-600 max-w-2xl mx-auto">
-            Encuentra las gafas perfectas para tu estilo de vida y necesidades.
+            Find the perfect eyewear for your lifestyle and needs.
           </p>
         </div>
 
@@ -105,18 +105,18 @@ const CategoriesSection: React.FC = () => {
         <div className={`mt-16 text-center ${getItemClass(5)}`}>
           <div className="bg-primary-900 rounded-2xl p-8 lg:p-12 text-white modern-card">
             <h3 className="text-2xl lg:text-3xl font-bold font-serif mb-4">
-              ¿Necesitas Ayuda Eligiendo?
+              Need Help Choosing?
             </h3>
             <p className="text-lg opacity-90 mb-6 max-w-2xl mx-auto">
-              Nuestros expertos ópticos están aquí para ayudarte a encontrar las gafas perfectas. 
-              Reserva una consulta gratuita o visita una de nuestras tiendas.
+              Our expert opticians are here to help you find the perfect eyewear. 
+              Book a free consultation or visit one of our stores.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link href="/consultation" className="btn-accent">
-                Reservar Consulta Gratuita
+                Book Free Consultation
               </Link>
               <Link href="/stores" className="bg-transparent border-2 border-white text-white hover:bg-white hover:text-primary-900 px-6 py-3 rounded-lg font-medium transition-all duration-200">
-                Encontrar Tienda
+                Find a Store
               </Link>
             </div>
           </div>
