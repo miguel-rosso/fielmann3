@@ -148,7 +148,7 @@ const CartSidebar: React.FC = () => {
                       {/* Remove Button */}
                       <button
                         onClick={() => removeFromCart(item.id)}
-                        className="p-1 text-neutral-400 hover:text-error transition-colors"
+                        className="p-1 text-neutral-400 hover:text-error transition-colors cursor-pointer"
                         title="Remove item"
                       >
                         <TrashIcon />
