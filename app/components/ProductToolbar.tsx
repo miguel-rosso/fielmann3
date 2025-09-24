@@ -46,7 +46,7 @@ const ProductToolbar: React.FC<ProductToolbarProps> = ({
         <div className="flex items-center gap-4">
           <button
             onClick={() => setShowFilters(!showFilters)}
-            className="lg:hidden flex items-center gap-2 text-neutral-600 hover:text-neutral-900"
+            className="lg:hidden flex items-center gap-2 text-neutral-600 hover:text-neutral-900 cursor-pointer"
           >
             <FilterIcon />
             Filtros
@@ -64,7 +64,7 @@ const ProductToolbar: React.FC<ProductToolbarProps> = ({
               ...prev, 
               sortBy: e.target.value as FilterState['sortBy']
             }))}
-            className="border border-neutral-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-accent-500 focus:border-transparent text-background"
+            className="border border-neutral-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-accent-500 focus:border-transparent text-background cursor-pointer"
           >
             <option value="name">Ordenar por Nombre</option>
             <option value="price">Ordenar por Precio</option>
@@ -76,13 +76,13 @@ const ProductToolbar: React.FC<ProductToolbarProps> = ({
           <div className="flex border border-neutral-300 rounded-lg overflow-hidden">
             <button
               onClick={() => setViewMode('grid')}
-              className={`p-2 ${viewMode === 'grid' ? 'bg-accent-500 text-white' : 'text-neutral-600 hover:bg-neutral-100'}`}
+              className={`p-2 cursor-pointer ${viewMode === 'grid' ? 'bg-accent-500 text-white' : 'text-neutral-600 hover:bg-neutral-100'}`}
             >
               <GridIcon />
             </button>
             <button
               onClick={() => setViewMode('list')}
-              className={`p-2 ${viewMode === 'list' ? 'bg-accent-500 text-white' : 'text-neutral-600 hover:bg-neutral-100'}`}
+              className={`p-2 cursor-pointer ${viewMode === 'list' ? 'bg-accent-500 text-white' : 'text-neutral-600 hover:bg-neutral-100'}`}
             >
               <ListIcon />
             </button>

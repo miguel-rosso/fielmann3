@@ -40,7 +40,7 @@ const ProductFilters: React.FC<ProductFiltersProps> = ({
           <h3 className="font-semibold text-neutral-900">Filtros</h3>
           <button
             onClick={onClearFilters}
-            className="text-sm text-accent-600 hover:text-accent-700"
+            className="text-sm text-accent-600 hover:text-accent-700 cursor-pointer"
           >
             Limpiar todo
           </button>
@@ -61,7 +61,7 @@ const ProductFilters: React.FC<ProductFiltersProps> = ({
                 ...prev,
                 priceRange: [parseInt(e.target.value), prev.priceRange[1]]
               }))}
-              className="w-full"
+              className="w-full cursor-pointer"
             />
             <input
               type="range"
@@ -72,7 +72,7 @@ const ProductFilters: React.FC<ProductFiltersProps> = ({
                 ...prev,
                 priceRange: [prev.priceRange[0], parseInt(e.target.value)]
               }))}
-              className="w-full"
+              className="w-full cursor-pointer"
             />
             <div className="flex justify-between text-sm text-neutral-600">
               <span>€{filters.priceRange[0]}</span>
@@ -88,12 +88,12 @@ const ProductFilters: React.FC<ProductFiltersProps> = ({
           </label>
           <div className="space-y-2 max-h-40 overflow-y-auto">
             {availableBrands.map(brand => (
-              <label key={brand} className="flex items-center">
+              <label key={brand} className="flex items-center cursor-pointer">
                 <input
                   type="checkbox"
                   checked={filters.brands.includes(brand)}
                   onChange={() => handleBrandToggle(brand)}
-                  className="rounded border-neutral-300 text-accent-600 focus:ring-accent-500"
+                  className="rounded border-neutral-300 text-accent-600 focus:ring-accent-500 cursor-pointer"
                 />
                 <span className="ml-2 text-sm text-neutral-700">{brand}</span>
               </label>
@@ -107,33 +107,33 @@ const ProductFilters: React.FC<ProductFiltersProps> = ({
             Disponibilidad
           </label>
           <div className="space-y-2">
-            <label className="flex items-center">
+            <label className="flex items-center cursor-pointer">
               <input
                 type="radio"
                 name="stock"
                 checked={filters.inStock === null}
                 onChange={() => setFilters(prev => ({ ...prev, inStock: null }))}
-                className="text-accent-600 focus:ring-accent-500"
+                className="text-accent-600 focus:ring-accent-500 cursor-pointer"
               />
               <span className="ml-2 text-sm text-neutral-700">Todos los productos</span>
             </label>
-            <label className="flex items-center">
+            <label className="flex items-center cursor-pointer">
               <input
                 type="radio"
                 name="stock"
                 checked={filters.inStock === true}
                 onChange={() => setFilters(prev => ({ ...prev, inStock: true }))}
-                className="text-accent-600 focus:ring-accent-500"
+                className="text-accent-600 focus:ring-accent-500 cursor-pointer"
               />
               <span className="ml-2 text-sm text-neutral-700">En stock</span>
             </label>
-            <label className="flex items-center">
+            <label className="flex items-center cursor-pointer">
               <input
                 type="radio"
                 name="stock"
                 checked={filters.inStock === false}
                 onChange={() => setFilters(prev => ({ ...prev, inStock: false }))}
-                className="text-accent-600 focus:ring-accent-500"
+                className="text-accent-600 focus:ring-accent-500 cursor-pointer"
               />
               <span className="ml-2 text-sm text-neutral-700">Sin stock</span>
             </label>

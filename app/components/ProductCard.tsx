@@ -84,7 +84,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, className = '' }) =>
           disabled={!product.inStock}
           className={`w-full py-3 px-4 rounded-xl font-semibold transition-all duration-300 transform relative overflow-hidden ${
             product.inStock
-              ? 'btn-primary hover:scale-105'
+              ? 'btn-primary hover:scale-105 cursor-pointer'
               : 'bg-gradient-to-r from-gray-300 to-gray-400 text-gray-600 cursor-not-allowed'
           }`}
         >
