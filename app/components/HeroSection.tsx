@@ -3,6 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useStaggeredAnimation } from '../hooks/useStaggeredAnimation';
 
 const ArrowRightIcon = () => (
   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -11,26 +12,28 @@ const ArrowRightIcon = () => (
 );
 
 const HeroSection: React.FC = () => {
+  const { getItemClass } = useStaggeredAnimation(8, 3, 300); // 8 elementos, 3 por grupo, 300ms delay
+
   return (
-    <section className="relative bg-gradient-to-br from-primary-50 to-accent-50 overflow-hidden">
+    <section className="relative bg-gradient-to-br from-primary-50 to-accent-50 overflow-hidden section-reveal">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="relative py-16 lg:py-24">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             {/* Content */}
             <div className="text-center lg:text-left">
-              <h1 className="text-4xl lg:text-6xl font-bold font-serif text-primary-900 mb-6 leading-tight reveal-animation">
+              <h1 className={`text-4xl lg:text-6xl font-bold font-serif text-primary-900 mb-6 leading-tight ${getItemClass(0)}`}>
                 Tu <span className="text-gradient">Visión</span> Perfecta
-                <span className="block text-gradient reveal-animation" style={{animationDelay: '0.2s'}}>
+                <span className={`block text-gradient ${getItemClass(1)}`}>
                   Comienza Aquí
                 </span>
               </h1>
               
-              <p className="text-lg lg:text-xl text-neutral-600 mb-8 max-w-2xl reveal-animation" style={{animationDelay: '0.4s'}}>
+              <p className={`text-lg lg:text-xl text-neutral-600 mb-8 max-w-2xl ${getItemClass(2)}`}>
                 Descubre nuestra colección exclusiva de gafas de diseño, lentes de contacto 
                 premium y accesorios de alta calidad. Más de 50 años creando momentos perfectos.
               </p>
 
-              <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start reveal-animation" style={{animationDelay: '0.6s'}}>
+              <div className={`flex flex-col sm:flex-row gap-4 justify-center lg:justify-start ${getItemClass(3)}`}>
                 <Link href="/glasses" className="btn-primary inline-flex items-center gap-2 group">
                   <span>Explorar Gafas</span>
                   <ArrowRightIcon />
@@ -43,15 +46,15 @@ const HeroSection: React.FC = () => {
 
               {/* Enhanced Features */}
               <div className="mt-12 grid grid-cols-3 gap-6">
-                <div className="text-center reveal-animation glass-card rounded-xl p-4 modern-card" style={{animationDelay: '0.8s'}}>
+                <div className={`text-center glass-card rounded-xl p-4 modern-card ${getItemClass(4)}`}>
                   <div className="text-2xl font-bold text-gradient mb-1 pulse-glow">5000+</div>
                   <div className="text-sm text-neutral-600 font-medium">Marcos Premium</div>
                 </div>
-                <div className="text-center reveal-animation glass-card rounded-xl p-4 modern-card" style={{animationDelay: '1s'}}>
+                <div className={`text-center glass-card rounded-xl p-4 modern-card ${getItemClass(5)}`}>
                   <div className="text-2xl font-bold text-gradient mb-1 pulse-glow">30</div>
                   <div className="text-sm text-neutral-600 font-medium">Días Devolución</div>
                 </div>
-                <div className="text-center reveal-animation glass-card rounded-xl p-4 modern-card" style={{animationDelay: '1.2s'}}>
+                <div className={`text-center glass-card rounded-xl p-4 modern-card ${getItemClass(6)}`}>
                   <div className="text-2xl font-bold text-gradient mb-1 pulse-glow">4.9</div>
                   <div className="text-sm text-neutral-600 font-medium">Rating Cliente</div>
                 </div>
@@ -59,7 +62,7 @@ const HeroSection: React.FC = () => {
             </div>
 
             {/* Enhanced Hero Image */}
-            <div className="relative reveal-animation" style={{animationDelay: '0.3s'}}>
+            <div className={`relative ${getItemClass(7)}`}>
               <div className="relative h-96 lg:h-[500px] rounded-2xl overflow-hidden modern-card shadow-2xl">
                 <Image
                   src="https://images.unsplash.com/photo-1574258495973-f010dfbb5371?w=600&h=500&fit=crop&crop=center"
@@ -73,7 +76,7 @@ const HeroSection: React.FC = () => {
               </div>
               
               {/* Enhanced Floating Cards */}
-              <div className="absolute -top-4 -left-4 glass-card p-4 rounded-xl shadow-lg float-animation backdrop-blur-md reveal-animation" style={{animationDelay: '1s'}}>
+              <div className="absolute -top-4 -left-4 glass-card p-4 rounded-xl shadow-lg float-animation backdrop-blur-md">
                 <div className="flex items-center gap-3">
                   <div className="w-12 h-12 bg-gradient-to-br from-accent-400 to-accent-600 rounded-full flex items-center justify-center pulse-glow">
                     <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -87,7 +90,7 @@ const HeroSection: React.FC = () => {
                 </div>
               </div>
 
-              <div className="absolute -bottom-4 -right-4 glass-card p-4 rounded-xl shadow-lg float-animation backdrop-blur-md reveal-animation" style={{ animationDelay: '1.2s' }}>
+              <div className="absolute -bottom-4 -right-4 glass-card p-4 rounded-xl shadow-lg float-animation backdrop-blur-md">
                 <div className="flex items-center gap-3">
                   <div className="w-12 h-12 bg-gradient-to-br from-primary-400 to-primary-600 rounded-full flex items-center justify-center pulse-glow">
                     <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">

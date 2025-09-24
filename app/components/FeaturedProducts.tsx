@@ -4,6 +4,7 @@ import React from 'react';
 import Link from 'next/link';
 import ProductCard from './ProductCard';
 import { getFeaturedProducts } from '../data/products';
+import { useStaggeredAnimation } from '../hooks/useStaggeredAnimation';
 
 const ArrowRightIcon = () => (
   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -13,34 +14,39 @@ const ArrowRightIcon = () => (
 
 const FeaturedProducts: React.FC = () => {
   const featuredProducts = getFeaturedProducts(8);
+  const { getItemClass } = useStaggeredAnimation(featuredProducts.length + 2, 3, 300); // productos + header + botón
 
   return (
-    <section className="py-16 lg:py-24 bg-white">
+    <section className="py-16 lg:py-24 bg-white section-reveal">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="text-center mb-12">
+        <div className={`text-center mb-12 ${getItemClass(0)}`}>
           <h2 className="text-3xl lg:text-4xl font-bold font-serif text-primary-900 mb-4">
-            Featured Products
+            Productos Destacados
           </h2>
           <p className="text-lg text-neutral-600 max-w-2xl mx-auto">
-            Discover our most popular eyewear, carefully selected for style, quality, and comfort.
+            Descubre nuestras gafas más populares, cuidadosamente seleccionadas por estilo, calidad y comodidad.
           </p>
         </div>
 
         {/* Product Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-          {featuredProducts.map((product) => (
-            <ProductCard key={product.id} product={product} />
+          {featuredProducts.map((product, index) => (
+            <ProductCard 
+              key={product.id} 
+              product={product} 
+              className={getItemClass(index + 1)}
+            />
           ))}
         </div>
 
         {/* View All Button */}
-        <div className="text-center">
+        <div className={`text-center ${getItemClass(featuredProducts.length + 1)}`}>
           <Link
-            href="/products"
+            href="/glasses"
             className="inline-flex items-center gap-2 btn-secondary"
           >
-            View All Products
+            Ver Todos los Productos
             <ArrowRightIcon />
           </Link>
         </div>
