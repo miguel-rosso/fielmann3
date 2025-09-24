@@ -58,13 +58,14 @@ const CartSidebar: React.FC = () => {
     <>
       {/* Overlay */}
       <div 
-        className="fixed inset-0 bg-black bg-opacity-50 z-40 transition-opacity"
+        className="fixed inset-0 z-40 transition-opacity"
+        style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }}
         onClick={toggleCart}
       />
       
       {/* Sidebar */}
-      <div className="fixed right-0 top-0 h-full w-full max-w-md bg-white z-50 shadow-xl transform transition-transform">
-        <div className="flex flex-col h-full">
+      <div className="fixed right-0 top-0 h-full w-full max-w-md bg-white z-50 shadow-2xl transform transition-all duration-300 ease-out animate-slide-in-right">
+        <div className="flex flex-col h-full backdrop-blur-sm">
           {/* Header */}
           <div className="flex items-center justify-between p-6 border-b border-neutral-200">
             <h2 className="text-lg font-semibold text-neutral-900">

@@ -80,7 +80,7 @@ const Header: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
-          <div className="flex-shrink-0">
+          <div className="flex-shrink-0 mr-2">
             <Link href="/" className="flex items-center">
               <div className="text-2xl font-bold font-serif text-primary-900">
                 Fielmann
@@ -111,7 +111,7 @@ const Header: React.FC = () => {
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder="Search glasses, sunglasses..."
-                  className="w-full pl-10 pr-4 py-2 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-accent-500 focus:border-transparent transition-colors"
+                  className="w-full pl-10 pr-4 py-2 border text-background border-neutral-300 rounded-lg focus:ring-2 focus:ring-accent-500 focus:border-transparent transition-colors"
                 />
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                   <SearchIcon />
@@ -135,11 +135,11 @@ const Header: React.FC = () => {
             {/* Cart */}
             <button
               onClick={toggleCart}
-              className="relative p-2 text-neutral-700 hover:text-primary-600 transition-colors"
+              className="relative p-2 text-neutral-700 hover:text-primary-600 transition-all duration-300 hover:scale-110"
             >
               <CartIcon />
               {getItemCount() > 0 && (
-                <span className="absolute -top-1 -right-1 bg-accent-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-medium">
+                <span className="absolute -top-1 -right-1 bg-gradient-to-r from-accent-500 to-accent-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-medium animate-bounce-in shadow-lg">
                   {getItemCount()}
                 </span>
               )}
@@ -168,7 +168,7 @@ const Header: React.FC = () => {
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder="Search glasses, sunglasses..."
-                  className="w-full pl-10 pr-4 py-2 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-accent-500 focus:border-transparent"
+                  className="w-full pl-10 pr-4 py-2 text-background border border-neutral-300 rounded-lg focus:ring-2 focus:ring-accent-500 focus:border-transparent"
                 />
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                   <SearchIcon />

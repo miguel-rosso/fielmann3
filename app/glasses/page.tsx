@@ -1,11 +1,12 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import CartSidebar from '../components/CartSidebar';
 import ProductCard from '../components/ProductCard';
 import { sampleProducts } from '../data/products';
+import { useStaggeredAnimation } from '../hooks/useStaggeredAnimation';
 
 const FilterIcon = () => (
   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -88,6 +89,9 @@ const GlassesPage: React.FC = () => {
     return result;
   }, [glassesProducts, filters]);
 
+  // Use staggered animation for product cards
+  const { getItemClass } = useStaggeredAnimation(filteredProducts.length, 150);
+
   const handleBrandToggle = (brand: string) => {
     setFilters(prev => ({
       ...prev,
@@ -112,7 +116,7 @@ const GlassesPage: React.FC = () => {
       
       <main className="flex-1 bg-neutral-50">
         {/* Page Header */}
-        <div className="bg-white border-b border-neutral-200">
+        <div className="bg-white border-b border-neutral-200 section-reveal delay-header">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
             <div className="text-center">
               <h1 className="text-3xl lg:text-4xl font-bold font-serif text-primary-900 mb-4">
@@ -128,7 +132,7 @@ const GlassesPage: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="flex flex-col lg:flex-row gap-8">
             {/* Filters Sidebar */}
-            <div className={`lg:w-64 ${showFilters ? 'block' : 'hidden lg:block'}`}>
+            <div className={`lg:w-64 ${showFilters ? 'block' : 'hidden lg:block'} section-reveal delay-filters`}>
               <div className="bg-white rounded-lg shadow-sm p-6 sticky top-24">
                 <div className="flex items-center justify-between mb-6">
                   <h3 className="font-semibold text-neutral-900">Filters</h3>
@@ -239,7 +243,7 @@ const GlassesPage: React.FC = () => {
             {/* Products Section */}
             <div className="flex-1">
               {/* Toolbar */}
-              <div className="bg-white rounded-lg shadow-sm p-4 mb-6">
+              <div className="bg-white rounded-lg shadow-sm p-4 mb-6 section-reveal delay-toolbar">
                 <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                   <div className="flex items-center gap-4">
                     <button
@@ -262,7 +266,7 @@ const GlassesPage: React.FC = () => {
                         ...prev, 
                         sortBy: e.target.value as FilterState['sortBy']
                       }))}
-                      className="border border-neutral-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-accent-500 focus:border-transparent"
+                      className="border border-neutral-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-accent-500 focus:border-transparent text-background"
                     >
                       <option value="name">Sort by Name</option>
                       <option value="price">Sort by Price</option>
@@ -290,15 +294,15 @@ const GlassesPage: React.FC = () => {
               </div>
 
               {/* Products Grid */}
-              <div className={viewMode === 'grid' 
+              <div className={`${viewMode === 'grid' 
                 ? 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6' 
                 : 'space-y-4'
-              }>
-                {filteredProducts.map(product => (
+              } section-reveal delay-grid`}>
+                {filteredProducts.map((product, index) => (
                   <ProductCard 
                     key={product.id} 
                     product={product}
-                    className={viewMode === 'list' ? 'flex-row' : ''}
+                    className={`${viewMode === 'list' ? 'flex-row' : ''} ${getItemClass(index)}`}
                   />
                 ))}
               </div>

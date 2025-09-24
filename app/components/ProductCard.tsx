@@ -2,20 +2,8 @@
 
 import React from 'react';
 import Image from 'next/image';
-import { Product } from '../context/CartContext';
 import { useCart } from '../context/CartContext';
-
-const HeartIcon = ({ filled }: { filled?: boolean }) => (
-  <svg className="w-5 h-5" fill={filled ? "currentColor" : "none"} stroke="currentColor" viewBox="0 0 24 24">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-  </svg>
-);
-
-const StarIcon = ({ filled }: { filled?: boolean }) => (
-  <svg className={`w-4 h-4 ${filled ? 'text-yellow-400' : 'text-neutral-300'}`} fill="currentColor" viewBox="0 0 20 20">
-    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-  </svg>
-);
+import { Product } from '../context/CartContext';
 
 interface ProductCardProps {
   product: Product;
@@ -24,147 +12,99 @@ interface ProductCardProps {
 
 const ProductCard: React.FC<ProductCardProps> = ({ product, className = '' }) => {
   const { addToCart } = useCart();
-  const [isWishlisted, setIsWishlisted] = React.useState(false);
-  const [isLoading, setIsLoading] = React.useState(false);
 
-  const formatPrice = (price: number) => {
-    return new Intl.NumberFormat('en-DE', {
-      style: 'currency',
-      currency: 'EUR'
-    }).format(price);
+  const handleAddToCart = () => {
+    addToCart(product);
   };
-
-  const handleAddToCart = async () => {
-    setIsLoading(true);
-    try {
-      addToCart(product);
-      // Simular un pequeño delay para mejor UX
-      await new Promise(resolve => setTimeout(resolve, 300));
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const handleWishlistToggle = () => {
-    setIsWishlisted(!isWishlisted);
-  };
-
-  // Rating ficticio para demostración
-  const rating = 4.5;
-  const reviewCount = Math.floor(Math.random() * 200) + 10;
 
   return (
-    <div className={`group relative bg-white rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden ${className}`}>
-      {/* Image Container */}
-      <div className="relative aspect-square overflow-hidden bg-neutral-100">
+    <div className={`bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:scale-105 hover:-translate-y-2 overflow-hidden group modern-card ${className}`}>
+      {/* Product Image */}
+      <div className="relative h-64 overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100">
         <Image
           src={product.image}
           alt={product.name}
           fill
-          className="object-cover group-hover:scale-105 transition-transform duration-300"
+          className="object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
         />
         
-        {/* Wishlist Button */}
-        <button
-          onClick={handleWishlistToggle}
-          className="absolute top-3 right-3 p-2 bg-white/80 backdrop-blur-sm rounded-full hover:bg-white transition-colors"
-        >
-          <HeartIcon filled={isWishlisted} />
-        </button>
-
-        {/* Sale Badge */}
-        {Math.random() > 0.7 && (
-          <div className="absolute top-3 left-3 bg-accent-500 text-white px-2 py-1 rounded-full text-xs font-medium">
-            Sale
-          </div>
-        )}
-
-        {/* Stock Status */}
+        {/* Out of Stock Overlay */}
         {!product.inStock && (
-          <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
-            <div className="bg-white px-4 py-2 rounded-lg">
-              <span className="text-sm font-medium text-neutral-900">Out of Stock</span>
+          <div className="absolute inset-0 bg-black bg-opacity-60 flex items-center justify-center backdrop-blur-sm">
+            <div className="text-center">
+              <span className="text-white font-bold text-lg mb-2 block">Agotado</span>
+              <div className="w-16 h-1 bg-red-500 mx-auto rounded-full"></div>
             </div>
           </div>
         )}
-
-        {/* Quick Add Button - Shows on Hover */}
-        <div className="absolute bottom-4 left-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-          <button
-            onClick={handleAddToCart}
-            disabled={!product.inStock || isLoading}
-            className={`w-full py-2 px-4 rounded-lg font-medium transition-all duration-200 ${
-              product.inStock
-                ? 'bg-primary-900 text-white hover:bg-primary-800 active:scale-95'
-                : 'bg-neutral-300 text-neutral-500 cursor-not-allowed'
-            }`}
-          >
-            {isLoading ? 'Adding...' : 'Quick Add'}
-          </button>
-        </div>
-      </div>
-
-      {/* Product Info */}
-      <div className="p-4">
-        {/* Brand */}
-        <div className="text-sm text-neutral-500 mb-1">
+        
+        {/* Brand Badge */}
+        <div className="absolute top-4 right-4 bg-gradient-to-r from-primary-600 to-primary-700 text-white px-3 py-1 rounded-full text-sm font-semibold shadow-lg pulse-glow">
           {product.brand}
         </div>
 
-        {/* Product Name */}
-        <h3 className="font-medium text-neutral-900 mb-2 line-clamp-2">
+        {/* Category Badge */}
+        <div className="absolute top-4 left-4 bg-white bg-opacity-90 backdrop-blur-sm text-gray-800 px-3 py-1 rounded-full text-xs font-medium shadow-md">
+          {product.category}
+        </div>
+
+        {/* Hover Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+      </div>
+
+      {/* Product Info */}
+      <div className="p-6 bg-gradient-to-br from-white to-gray-50">
+        <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-primary-600 transition-colors duration-300 line-clamp-2">
           {product.name}
         </h3>
-
-        {/* Rating */}
-        <div className="flex items-center gap-1 mb-2">
-          <div className="flex">
-            {[1, 2, 3, 4, 5].map((star) => (
-              <StarIcon key={star} filled={star <= Math.floor(rating)} />
-            ))}
-          </div>
-          <span className="text-sm text-neutral-500 ml-1">
-            ({reviewCount})
-          </span>
-        </div>
-
-        {/* Price */}
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <span className="text-lg font-semibold text-neutral-900">
-              {formatPrice(product.price)}
+        
+        <p className="text-gray-600 text-sm mb-4 line-clamp-2 leading-relaxed">
+          {product.description}
+        </p>
+        
+        {/* Price and Stock Status */}
+        <div className="flex items-center justify-between mb-6">
+          <div className="flex flex-col">
+            <span className="text-3xl font-bold text-gradient">
+              €{product.price.toFixed(2)}
             </span>
-            {Math.random() > 0.8 && (
-              <span className="text-sm text-neutral-500 line-through">
-                {formatPrice(product.price * 1.2)}
-              </span>
-            )}
+            <span className="text-xs text-gray-500 mt-1">
+              {product.inStock ? 'En stock' : 'Sin stock'}
+            </span>
           </div>
           
-          {/* Category Badge */}
-          <span className={`text-xs px-2 py-1 rounded-full font-medium ${
-            product.category === 'glasses' ? 'bg-blue-100 text-blue-800' :
-            product.category === 'sunglasses' ? 'bg-yellow-100 text-yellow-800' :
-            product.category === 'contacts' ? 'bg-green-100 text-green-800' :
-            'bg-purple-100 text-purple-800'
-          }`}>
-            {product.category}
-          </span>
+          {product.inStock && (
+            <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse shadow-lg"></div>
+          )}
         </div>
 
-        {/* Add to Cart Button - Mobile */}
+        {/* Add to Cart Button */}
         <button
           onClick={handleAddToCart}
-          disabled={!product.inStock || isLoading}
-          className={`w-full mt-3 py-2 px-4 rounded-lg font-medium transition-all duration-200 md:hidden ${
+          disabled={!product.inStock}
+          className={`w-full py-3 px-4 rounded-xl font-semibold transition-all duration-300 transform relative overflow-hidden ${
             product.inStock
-              ? 'bg-primary-900 text-white hover:bg-primary-800 active:scale-95'
-              : 'bg-neutral-300 text-neutral-500 cursor-not-allowed'
+              ? 'btn-primary hover:scale-105'
+              : 'bg-gradient-to-r from-gray-300 to-gray-400 text-gray-600 cursor-not-allowed'
           }`}
         >
-          {isLoading ? 'Adding...' : product.inStock ? 'Add to Cart' : 'Out of Stock'}
+          <span className="relative z-10">
+            {product.inStock ? (
+              <div className="flex items-center justify-center space-x-2">
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-2.5 5M7 13v6a2 2 0 002 2h6a2 2 0 002-2v-6m-8 0V9a2 2 0 012-2h4a2 2 0 012 2v4.01" />
+                </svg>
+                <span>Añadir al Carrito</span>
+              </div>
+            ) : (
+              'No Disponible'
+            )}
+          </span>
         </button>
       </div>
+
+      {/* Bottom Accent Line */}
+      <div className="h-1 bg-gradient-to-r from-primary-400 via-accent-400 to-primary-600 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></div>
     </div>
   );
 };
