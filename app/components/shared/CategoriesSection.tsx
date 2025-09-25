@@ -14,6 +14,7 @@ interface CategoryCardProps {
 }
 
 const CategoryCard: React.FC<CategoryCardProps> = ({ title, description, image, href, count }) => {
+
   return (
     <Link href={href} className="group block">
       <div className="relative bg-white rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden">
@@ -52,28 +53,28 @@ const CategoriesSection: React.FC = () => {
     {
       title: 'Prescription Glasses',
       description: 'Classic and modern frames for everyday wear',
-      image: '/api/placeholder/400/300',
+      image: 'https://images.unsplash.com/photo-1574258495973-f010dfbb5371?w=400&h=300&fit=crop&crop=center',
       href: '/glasses',
       count: 150,
     },
     {
       title: 'Sunglasses',
       description: 'UV protection with uncompromising style',
-      image: '/api/placeholder/400/300',
+      image: 'https://images.unsplash.com/photo-1508296695146-257a814070b4?w=400&h=300&fit=crop&crop=center',
       href: '/sunglasses',
       count: 120,
     },
     {
       title: 'Contact Lenses',
       description: 'Daily, weekly, and monthly options',
-      image: '/api/placeholder/400/300',
+      image: 'https://images.unsplash.com/photo-1582143434535-eba55a806718?q=80&w=3270&auto=format&fit=crop&crop=center',
       href: '/contacts',
       count: 50,
     },
     {
       title: 'Accessories',
       description: 'Cases, chains, and cleaning supplies',
-      image: '/api/placeholder/400/300',
+      image: 'https://images.unsplash.com/photo-1556306535-38febf6782e7?w=400&h=300&fit=crop&crop=center',
       href: '/accessories',
       count: 80,
     },

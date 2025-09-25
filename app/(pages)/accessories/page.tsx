@@ -7,6 +7,7 @@ import CartSidebar from '@/components/ui/CartSidebar';
 import ProductCard from '@/components/product/ProductCard';
 import ProductFilters, { FilterState } from '@/components/product/ProductFilters';
 import ProductToolbar from '@/components/product/ProductToolbar';
+import PageHeader from '@/components/shared/PageHeader';
 import { useAccessories } from '@/api/hooks/useAccessories';
 import { useStaggeredAnimation } from '@/api/hooks/useStaggeredAnimation';
 
@@ -135,20 +136,17 @@ const AccessoriesPage: React.FC = () => {
       <Header />
       
       <main className="flex-1 bg-neutral-50">
-        {/* Hero Section */}
-        <div className="bg-gradient-to-r from-purple-50 to-pink-50 border-b border-neutral-200 section-reveal delay-header">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-            <div className="text-center">
-              <h1 className="text-4xl lg:text-5xl font-bold font-serif text-primary-900 mb-4">
-                Eyewear Accessories
-              </h1>
-              <p className="text-xl text-neutral-600 max-w-3xl mx-auto mb-8">
-                Complete your vision experience with our premium collection of cases, 
-                cleaning products, chains and maintenance tools.
-              </p>
-            </div>
-          </div>
-        </div>
+        <PageHeader
+          title="Eyewear Accessories"
+          description="Complete your vision experience with our premium collection of cases, cleaning products, chains and maintenance tools."
+          gradientFrom="from-purple-50"
+          gradientTo="to-pink-50"
+          features={[
+            { color: "bg-purple-400", text: "Premium Cases" },
+            { color: "bg-pink-400", text: "Cleaning Kits" },
+            { color: "bg-indigo-400", text: "Stylish Chains" }
+          ]}
+        />
 
         {/* Category Grid */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">

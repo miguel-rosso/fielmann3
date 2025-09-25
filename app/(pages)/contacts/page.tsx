@@ -7,6 +7,7 @@ import CartSidebar from '@/components/ui/CartSidebar';
 import ProductCard from '@/components/product/ProductCard';
 import ProductFilters, { FilterState } from '@/components/product/ProductFilters';
 import ProductToolbar from '@/components/product/ProductToolbar';
+import PageHeader from '@/components/shared/PageHeader';
 import { useContacts } from '@/api/hooks/useContacts';
 import { useStaggeredAnimation } from '@/api/hooks/useStaggeredAnimation';
 
@@ -95,54 +96,17 @@ const ContactsPage: React.FC = () => {
       <Header />
       
       <main className="flex-1 bg-neutral-50">
-        {/* Hero Section */}
-        <div className="bg-gradient-to-r from-blue-50 to-cyan-50 border-b border-neutral-200 section-reveal delay-header">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-            <div className="text-center">
-              <h1 className="text-4xl lg:text-5xl font-bold font-serif text-primary-900 mb-4">
-                Contact Lenses
-              </h1>
-              <p className="text-xl text-neutral-600 max-w-3xl mx-auto mb-8">
-                Experience the freedom of contact lenses. Daily, weekly and monthly options 
-                for every lifestyle and visual need.
-              </p>
-              
-              {/* Feature Grid */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12 group-reveal delay-200">
-                <div className="bg-white rounded-xl p-6 shadow-sm modern-card">
-                  <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mx-auto mb-4">
-                    <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                    </svg>
-                  </div>
-                  <h3 className="text-lg font-semibold text-neutral-900 mb-2">Daily Comfort</h3>
-                  <p className="text-neutral-600">Fresh pair every day for maximum hygiene and comfort</p>
-                </div>
-
-                <div className="bg-white rounded-xl p-6 shadow-sm modern-card">
-                  <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mx-auto mb-4">
-                    <svg className="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                  </div>
-                  <h3 className="text-lg font-semibold text-neutral-900 mb-2">FDA Approved</h3>
-                  <p className="text-neutral-600">All lenses meet strict safety and quality standards</p>
-                </div>
-
-                <div className="bg-white rounded-xl p-6 shadow-sm modern-card">
-                  <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mx-auto mb-4">
-                    <svg className="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zM21 5a2 2 0 00-2-2h-4a2 2 0 00-2 2v12a4 4 0 004 4h4a2 2 0 002-2V5z" />
-                    </svg>
-                  </div>
-                  <h3 className="text-lg font-semibold text-neutral-900 mb-2">Expert Fitting</h3>
-                  <p className="text-neutral-600">Professional consultation and perfect fit guarantee</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        <PageHeader
+          title="Contact Lenses"
+          description="Experience the freedom of contact lenses. Daily, weekly and monthly options for every lifestyle and visual need."
+          gradientFrom="from-blue-50"
+          gradientTo="to-cyan-50"
+          features={[
+            { color: "bg-blue-400", text: "Daily Comfort" },
+            { color: "bg-green-400", text: "FDA Approved" },
+            { color: "bg-purple-400", text: "Expert Fitting" }
+          ]}
+        />
 
         {/* Contact Types */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">

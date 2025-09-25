@@ -3,7 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import ProductCard from './ProductCard';
-import { getFeaturedProducts } from '@/lib/products';
+import { useAllProducts } from '@/api/hooks/useAllProducts';
 import { useStaggeredAnimation } from '@/api/hooks/useStaggeredAnimation';
 
 const ArrowRightIcon = () => (
@@ -13,8 +13,21 @@ const ArrowRightIcon = () => (
 );
 
 const FeaturedProducts: React.FC = () => {
-  const featuredProducts = getFeaturedProducts(8);
+  const { products: featuredProducts, loading, error } = useAllProducts({ limit: 8 });
   const { getItemClass } = useStaggeredAnimation(featuredProducts.length + 2, 3, 300); // products + header + button
+
+  if (error) {
+    return (
+      <section className="py-16 lg:py-24 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center">
+            <h2 className="text-2xl font-bold text-red-600 mb-4">Error Loading Featured Products</h2>
+            <p className="text-neutral-600">{error}</p>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="py-16 lg:py-24 bg-white section-reveal">
@@ -30,15 +43,30 @@ const FeaturedProducts: React.FC = () => {
         </div>
 
         {/* Product Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-          {featuredProducts.map((product, index) => (
-            <ProductCard 
-              key={product.id} 
-              product={product} 
-              className={getItemClass(index + 1)}
-            />
-          ))}
-        </div>
+        {loading ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+            {[...Array(8)].map((_, index) => (
+              <div key={index} className="bg-white rounded-2xl shadow-lg overflow-hidden animate-pulse">
+                <div className="h-64 bg-gray-200"></div>
+                <div className="p-6">
+                  <div className="h-4 bg-gray-200 rounded mb-2"></div>
+                  <div className="h-4 bg-gray-200 rounded w-3/4 mb-4"></div>
+                  <div className="h-6 bg-gray-200 rounded w-1/2"></div>
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+            {featuredProducts.map((product, index) => (
+              <ProductCard 
+                key={product.id} 
+                product={product} 
+                className={getItemClass(index + 1)}
+              />
+            ))}
+          </div>
+        )}
 
         {/* View All Button */}
         <div className={`text-center ${getItemClass(featuredProducts.length + 1)}`}>

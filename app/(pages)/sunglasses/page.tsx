@@ -7,6 +7,7 @@ import CartSidebar from '@/components/ui/CartSidebar';
 import ProductCard from '@/components/product/ProductCard';
 import ProductFilters, { FilterState } from '@/components/product/ProductFilters';
 import ProductToolbar from '@/components/product/ProductToolbar';
+import PageHeader from '@/components/shared/PageHeader';
 import { useSunglasses } from '@/api/hooks/useSunglasses';
 import { useStaggeredAnimation } from '@/api/hooks/useStaggeredAnimation';
 
@@ -95,34 +96,17 @@ const SunglassesPage: React.FC = () => {
       <Header />
       
       <main className="flex-1 bg-neutral-50">
-        {/* Page Header */}
-        <div className="bg-gradient-to-r from-yellow-50 to-orange-50 border-b border-neutral-200 section-reveal delay-header">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-            <div className="text-center">
-              <h1 className="text-4xl lg:text-5xl font-bold font-serif text-primary-900 mb-4">
-                Premium Sunglasses
-              </h1>
-              <p className="text-xl text-neutral-600 max-w-3xl mx-auto mb-8">
-                Protect your eyes in style with our premium sunglasses collection. 
-                UV400 protection, polarized lenses and timeless designs.
-              </p>
-              <div className="flex flex-wrap justify-center gap-4 text-sm text-background">
-                <div className="flex items-center gap-2 bg-white px-4 py-2 rounded-full shadow-sm ">
-                  <div className="w-3 h-3 bg-yellow-400 rounded-full"></div>
-                  <span>UV400 Protection</span>
-                </div>
-                <div className="flex items-center gap-2 bg-white px-4 py-2 rounded-full shadow-sm">
-                  <div className="w-3 h-3 bg-blue-400 rounded-full"></div>
-                  <span>Polarized Lenses</span>
-                </div>
-                <div className="flex items-center gap-2 bg-white px-4 py-2 rounded-full shadow-sm">
-                  <div className="w-3 h-3 bg-green-400 rounded-full"></div>
-                  <span>Impact Resistant</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        <PageHeader
+          title="Premium Sunglasses"
+          description="Protect your eyes in style with our premium sunglasses collection. UV400 protection, polarized lenses and timeless designs."
+          gradientFrom="from-yellow-50"
+          gradientTo="to-orange-50"
+          features={[
+            { color: "bg-yellow-400", text: "UV400 Protection" },
+            { color: "bg-blue-400", text: "Polarized Lenses" },
+            { color: "bg-green-400", text: "Impact Resistant" }
+          ]}
+        />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="flex flex-col lg:flex-row gap-8">

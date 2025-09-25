@@ -7,6 +7,7 @@ import CartSidebar from '@/components/ui/CartSidebar';
 import ProductCard from '@/components/product/ProductCard';
 import ProductFilters, { FilterState } from '@/components/product/ProductFilters';
 import ProductToolbar from '@/components/product/ProductToolbar';
+import PageHeader from '@/components/shared/PageHeader';
 import { useStaggeredAnimation } from '@/api/hooks/useStaggeredAnimation';
 import { useGlasses } from '@/api/hooks/useGlasses';
 
@@ -82,25 +83,26 @@ const GlassesPage: React.FC = () => {
       <Header />
       
       <main className="flex-1 bg-neutral-50">
-        {/* Page Header */}
-        <div className="bg-white border-b border-neutral-200 section-reveal delay-header">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-            <div className="text-center">
-              <h1 className="text-3xl lg:text-4xl font-bold font-serif text-primary-900 mb-4">
-                Prescription Glasses
-              </h1>
-              <p className="text-lg text-neutral-600 max-w-2xl mx-auto">
-                Discover our premium collection of prescription glasses. From classic to contemporary designs, find the perfect frame for your style.
-              </p>
-              {error && (
-                <div className="mt-4 p-4 bg-red-50 border border-red-200 rounded-lg max-w-md mx-auto">
-                  <p className="text-red-600 font-medium">Error loading glasses</p>
-                  <p className="text-red-500 text-sm mt-1">{error}</p>
-                </div>
-              )}
+        <PageHeader
+          title="Prescription Glasses"
+          description="Discover our premium collection of prescription glasses. From classic to contemporary designs, find the perfect frame for your style."
+          gradientFrom="white"
+          gradientTo="white"
+          features={[
+            { color: "bg-blue-400", text: "Premium Lenses" },
+            { color: "bg-green-400", text: "Perfect Fit" },
+            { color: "bg-purple-400", text: "Style Variety" }
+          ]}
+        />
+        
+        {error && (
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <div className="p-4 bg-red-50 border border-red-200 rounded-lg max-w-md mx-auto">
+              <p className="text-red-600 font-medium">Error loading glasses</p>
+              <p className="text-red-500 text-sm mt-1">{error}</p>
             </div>
           </div>
-        </div>
+        )}
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="flex flex-col lg:flex-row gap-8">
