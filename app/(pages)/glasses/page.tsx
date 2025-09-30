@@ -159,7 +159,7 @@ const GlassesPage: React.FC = () => {
               )}
 
               {/* No Results */}
-              {!loading && filteredProducts.length === 0 && (
+              {!loading && glasses.length > 0 && filteredProducts.length === 0 && (
                 <div className="text-center py-12">
                   <div className="text-neutral-400 mb-4">
                     <svg className="w-16 h-16 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">

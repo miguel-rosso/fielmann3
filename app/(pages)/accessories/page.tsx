@@ -148,43 +148,10 @@ const AccessoriesPage: React.FC = () => {
           ]}
         />
 
-        {/* Category Grid */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-          <div className="text-center mb-12 section-reveal delay-300">
-            <h2 className="text-3xl font-bold font-serif text-primary-900 mb-4">
-              Everything You Need
-            </h2>
-            <p className="text-lg text-neutral-600">
-              Professional accessories to protect, clean and style your eyewear
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16 group-reveal delay-400">
-            {accessoryCategories.map((category, index) => (
-              <div
-                key={index}
-                className="bg-white rounded-xl p-8 shadow-sm hover:shadow-lg transition-all duration-300 group modern-card"
-              >
-                <div className="flex items-start gap-6">
-                  <div className="flex-shrink-0 w-16 h-16 bg-gradient-to-br from-accent-400 to-accent-600 rounded-xl flex items-center justify-center text-white group-hover:scale-110 transition-transform">
-                    {category.icon}
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="text-xl font-bold text-neutral-900 mb-3">
-                      {category.title}
-                    </h3>
-                    <p className="text-neutral-600 leading-relaxed">
-                      {category.description}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-
           {/* Products with Filters */}
           <div className="text-center mb-8">
-                        <h2 className="text-2xl font-bold font-serif text-primary-900 mb-4">
+            <h2 className="text-2xl font-bold font-serif text-primary-900 mb-4">
               Available Accessories
             </h2>
           </div>
@@ -228,7 +195,7 @@ const AccessoriesPage: React.FC = () => {
               </div>
 
               {/* No Results */}
-              {filteredProducts.length === 0 && (
+              {!loading && accessories.length > 0 && filteredProducts.length === 0 && (
                 <div className="text-center py-12">
                   <div className="text-neutral-400 mb-4">
                     <svg className="w-16 h-16 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">

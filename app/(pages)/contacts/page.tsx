@@ -108,67 +108,7 @@ const ContactsPage: React.FC = () => {
           ]}
         />
 
-        {/* Contact Types */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-          <div className="text-center mb-12 section-reveal delay-300">
-            <h2 className="text-3xl font-bold font-serif text-primary-900 mb-4">
-              Choose Your Perfect Lens
-            </h2>
-            <p className="text-lg text-neutral-600">
-              Different lifestyles need different solutions
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16 group-reveal delay-400">
-            <div className="bg-white rounded-xl p-8 shadow-sm hover:shadow-lg transition-all duration-300 modern-card">
-              <div className="text-center">
-                <div className="w-16 h-16 bg-gradient-to-br from-blue-400 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-4 pulse-glow">
-                  <span className="text-white font-bold text-lg">1</span>
-                </div>
-                <h3 className="text-xl font-bold text-neutral-900 mb-3">Daily Lenses</h3>
-                <p className="text-neutral-600 mb-4">
-                  Perfect for occasional use, travel or trying lenses for the first time. 
-                  No cleaning required - just use and dispose.
-                </p>
-                <div className="text-sm text-neutral-500">
-                  Ideal for: New users, active lifestyles, allergies
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-white rounded-xl p-8 shadow-sm hover:shadow-lg transition-all duration-300 modern-card">
-              <div className="text-center">
-                <div className="w-16 h-16 bg-gradient-to-br from-green-400 to-green-600 rounded-full flex items-center justify-center mx-auto mb-4 pulse-glow">
-                  <span className="text-white font-bold text-lg">7</span>
-                </div>
-                <h3 className="text-xl font-bold text-neutral-900 mb-3">Weekly Lenses</h3>
-                <p className="text-neutral-600 mb-4">
-                  Great balance between convenience and value. Weekly replacement reduces 
-                  the risk of protein buildup while being cost-effective.
-                </p>
-                <div className="text-sm text-neutral-500">
-                  Ideal for: Regular use, balanced lifestyle
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-white rounded-xl p-8 shadow-sm hover:shadow-lg transition-all duration-300 modern-card">
-              <div className="text-center">
-                <div className="w-16 h-16 bg-gradient-to-br from-purple-400 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-4 pulse-glow">
-                  <span className="text-white font-bold text-lg">30</span>
-                </div>
-                <h3 className="text-xl font-bold text-neutral-900 mb-3">Monthly Lenses</h3>
-                <p className="text-neutral-600 mb-4">
-                  More affordable for daily use. Advanced materials provide 
-                  excellent oxygen permeability for all-day comfort.
-                </p>
-                <div className="text-sm text-neutral-500">
-                  Ideal for: Daily use, budget-conscious users
-                </div>
-              </div>
-            </div>
-          </div>
-
           {/* Products with Filters */}
           <div className="text-center mb-8 section-reveal delay-filters">
             <h2 className="text-2xl font-bold font-serif text-primary-900 mb-4">
@@ -215,7 +155,7 @@ const ContactsPage: React.FC = () => {
               </div>
 
               {/* No Results */}
-              {filteredProducts.length === 0 && (
+              {!loading && contacts.length > 0 && filteredProducts.length === 0 && (
                 <div className="text-center py-12">
                   <div className="text-neutral-400 mb-4">
                     <svg className="w-16 h-16 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
